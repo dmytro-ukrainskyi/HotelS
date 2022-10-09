@@ -23,6 +23,21 @@ struct Device {
     static var hotelName: String {
         getHotelName()
     }
+    
+    //MARK: - Public methods
+    
+    static func setAdminStatus() {
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: UserDefaultsConstants.isAdmin)
+        defaults.removeObject(forKey: UserDefaultsConstants.roomNumber)
+    }
+    
+    static func setRoomNumber(_ roomNumber: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(false, forKey: UserDefaultsConstants.isAdmin)
+        defaults.set(roomNumber, forKey: UserDefaultsConstants.roomNumber)
+    }
+
         
     //MARK: - Private methods
     private static func getDeviceRoomId() -> Int {
