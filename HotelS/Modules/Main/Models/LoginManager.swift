@@ -13,7 +13,13 @@ class LoginManager {
     //MARK: - Public properties
     let db = Firestore.firestore()
     
+    //MARK: - Private properties
+    
+    
     //MARK: - Public methods
+    
+    
+    //MARK: - Private methods
     
     
 }
