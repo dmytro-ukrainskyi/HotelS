@@ -9,7 +9,6 @@ import UIKit
 
 extension LoginViewController {
     
-    //MARK: - Login
     //MARK: Public methods
     func signIn() {
         let email = emailTextField.text!
@@ -20,6 +19,18 @@ extension LoginViewController {
                 self.login()
             } else {
                 self.showFailedAuthAlert()
+            }
+        }
+    }
+    
+    func registerWith(hotelName: String,
+                      email: String,
+                      password: String) {
+        loginManager.registerWith(hotelName: hotelName,
+                                  email: email,
+                                  password: password) { success in
+            if success == false {
+                self.showFailedRegistrationAlert()
             }
         }
     }
@@ -65,22 +76,6 @@ extension LoginViewController {
         }
     }
     
-    
-    //MARK: - Registration
-    //MARK:  Public methods
-    func registerWith(hotelName: String,
-                              email: String,
-                              password: String) {
-        loginManager.registerWith(hotelName: hotelName,
-                                  email: email,
-                                  password: password) { success in
-            if success == false {
-                self.showFailedRegistrationAlert()
-            }
-        }
-    }
-    
-    //MARK: - Navigation
     private func openCategoriesVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let navigationController = storyboard.instantiateViewController(identifier: StoryboardConstants.navigationControllerIdentifier)
