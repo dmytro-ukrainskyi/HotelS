@@ -10,6 +10,7 @@ import UIKit
 final class CategoriesCollectionViewController: UICollectionViewController {
     
     //MARK: - Public properties
+    let loginManager = LoginManager()
     let serviceCategories = Service.categories
     
     //MARK: - Lifecycle
@@ -24,8 +25,7 @@ final class CategoriesCollectionViewController: UICollectionViewController {
     
     //MARK: - IBActions
     @IBAction func logOutButtonTapped(_ sender: UIBarButtonItem) {
-        //askPassword()
-        logOut()
+        showAuthorizationAlert()
     }
     
 }

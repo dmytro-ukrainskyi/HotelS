@@ -75,6 +75,15 @@ class LoginManager {
         }
     }
     
+    func logOut(completionHandler: @escaping () -> ()) {
+        do {
+            try FirebaseAuth.Auth.auth().signOut()
+                completionHandler()
+        } catch {
+            print("Error signing out")
+        }
+    }
+    
     //MARK: - Private methods
     private func saveHotelWith(id: String, name: String) {
         let hotelsRef = db.collection(FStoreConstants.hotelsCollectionName)
