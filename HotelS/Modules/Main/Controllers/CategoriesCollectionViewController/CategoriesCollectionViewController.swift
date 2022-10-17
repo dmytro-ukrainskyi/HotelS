@@ -25,7 +25,8 @@ final class CategoriesCollectionViewController: UICollectionViewController {
     
     //MARK: - IBActions
     @IBAction func logOutButtonTapped(_ sender: UIBarButtonItem) {
-        showAuthorizationAlert()
+        //showAuthorizationAlert()
+        logOut()
     }
     
 }

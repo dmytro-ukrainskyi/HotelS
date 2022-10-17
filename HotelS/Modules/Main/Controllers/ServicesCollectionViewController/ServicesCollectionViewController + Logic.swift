@@ -26,6 +26,7 @@ extension ServicesCollectionViewController {
         }
     }
     
+    //TODO: - Delete service image too
     func delete(service: Service) {
         self.servicesManager.delete(service: service) {
             self.loadServices()

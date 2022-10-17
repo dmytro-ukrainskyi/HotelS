@@ -16,7 +16,7 @@ extension ServiceCreationViewController {
         
         if serviceToEdit != nil {
             setupServiceEditing()
-            //loadServiceImage()
+            loadServiceImage()
         }
     }
     

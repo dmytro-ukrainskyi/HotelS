@@ -37,7 +37,7 @@ final class ServiceCreationViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(serviceToEdit)
         setupUI()
     }
     

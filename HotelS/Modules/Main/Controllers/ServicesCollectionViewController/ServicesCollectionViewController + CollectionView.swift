@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 extension ServicesCollectionViewController {
     
@@ -25,7 +26,8 @@ extension ServicesCollectionViewController {
         
         cell.serviceNameLabel!.text = service.name
         cell.servicePriceLabel!.text = service.price.currencyString
-        cell.serviceImageView.image = UIImage()
+        
+        cell.serviceImageView.sd_setImage(with: service.imageURL)
 
         return cell
     }

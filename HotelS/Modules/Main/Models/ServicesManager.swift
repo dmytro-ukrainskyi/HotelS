@@ -7,27 +7,38 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
+import FirebaseFirestoreSwift
 
 class ServicesManager {
     
     //MARK: - Public properties
     let db = Firestore.firestore()
+    let storage = Storage.storage()
+    
     var services = [Service]()
     
     //MARK: - Public methods
-    func save(service: Service, completionHandler: @escaping ()->()) {
-        let servicesRef = db
+    func save(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
+        let serviceRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
+            .document()
         
-        servicesRef.addDocument(data: [
+        let documentID = serviceRef.documentID
+        
+        serviceRef.setData([
             FStoreConstants.serviceNameField: service.name,
             FStoreConstants.serviceDescriptionField: service.description,
             FStoreConstants.servicePriceField: service.price,
             FStoreConstants.serviceCategoryField: service.category.rawValue,
-            FStoreConstants.serviceImageField: service.image!
+            FStoreConstants.serviceDocumentIDField: serviceRef.documentID
         ]) {_ in
+            var serviceWithID = service
+            serviceWithID.documentID = documentID
+            
+            self.save(serviceImage: image, forService: serviceWithID)
             completionHandler()
         }
         
@@ -46,6 +57,7 @@ class ServicesManager {
                 print("Error loading services: \(String(describing: error))")
                 return
             }
+            
             if let snapshotDocuments = querySnapshot?.documents {
                 self.services = []
                 
@@ -59,68 +71,101 @@ class ServicesManager {
         }
     }
     
-    func update(service: Service, completionHandler: @escaping ()->()) {
-        db
+    func update(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
+        
+        let serviceRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
-            .whereField(FStoreConstants.serviceNameField, isEqualTo: service.name)
-            .getDocuments { (querySnapshot, error) in
-                if error != nil {
-                    print("Error loading services: \(String(describing: error))")
-                } else {
-                    if let documentsToUpdate = querySnapshot?.documents {
-                        for document in documentsToUpdate {
-                            document.reference.updateData([
-                                FStoreConstants.serviceNameField: service.name,
-                                FStoreConstants.serviceDescriptionField: service.description,
-                                FStoreConstants.servicePriceField: service.price,
-                                FStoreConstants.serviceImageField: service.image!
-                            ])
-                        }
-                    }
-                    completionHandler()
-                }
-            }
+            .document(service.documentID!)
+        
+        serviceRef.updateData([
+            FStoreConstants.serviceNameField: service.name,
+            FStoreConstants.serviceDescriptionField: service.description,
+            FStoreConstants.servicePriceField: service.price,
+        ]) {_ in
+            self.save(serviceImage: image, forService: service)
+            completionHandler()
+        }
     }
     
+    //TODO: - Delete service image
     func delete(service: Service, completionHandler: @escaping ()->()) {
-        db
+        let serviceRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
-            .whereField(FStoreConstants.serviceNameField, isEqualTo: service.name)
-            .getDocuments { (querySnapshot, error) in
-                if error != nil {
-                    print("Error loading orders: \(String(describing: error))")
-                } else {
-                    if let documentsToDelete = querySnapshot?.documents {
-                        for document in documentsToDelete {
-                            document.reference.delete()
-                        }
-                        completionHandler()
-                    }
-                }
-            }
+            .document(service.documentID!)
+        
+        serviceRef.delete() {_ in
+            self.deleteImage(forService: service)
+            completionHandler()
+        }
     }
     
     //MARK: - Private methods
     private func createService(from document: QueryDocumentSnapshot) -> Service {
         let data = document.data()
         let categoryString = data[FStoreConstants.serviceCategoryField] as! String
+        let imageURLString = data[FStoreConstants.serviceImageURLField] as? String
         
         let name = data[FStoreConstants.serviceNameField] as! String
         let description = data[FStoreConstants.serviceDescriptionField] as! String
         let price = data[FStoreConstants.servicePriceField] as! Double
         let category = Service.Category(rawValue: categoryString)!
+        let imageURL = URL(string: imageURLString ?? "")
+        let documentID = data[FStoreConstants.serviceDocumentIDField] as! String
         
-        var service = Service(name: name, description: description, price: price, category: category)
-        
-        if let image = data[FStoreConstants.serviceImageField] as? String {
-            service.image = image
-        }
+        let service = Service(name: name, description: description, price: price, category: category, imageURL: imageURL, documentID: documentID)
         
         return service
+    }
+    
+    private func save(serviceImage: Data ,forService service: Service) {
+        let uploadRef = storage
+            .reference()
+            .child("Service images")
+            .child(Hotel.id)
+            .child(service.category.rawValue)
+            .child(service.name)
+        
+        let uploadTask = uploadRef.putData(serviceImage)
+        
+        uploadTask.observe(.success) {_ in
+            uploadRef.downloadURL { result in
+                switch result {
+                case .success(let url):
+                    self.updateServiceImageURL(forService: service, with: url)
+                case .failure(let error):
+                    print("Error updating image URL: \(error)")
+                }
+            }
+        }
+    }
+    
+    private func updateServiceImageURL(forService service: Service, with url: URL) {
+        let serviceRef = db
+            .collection(FStoreConstants.hotelsCollectionName)
+            .document(Hotel.id)
+            .collection(FStoreConstants.servicesCollectionName)
+            .document(service.documentID!)
+        
+        serviceRef.updateData([
+            FStoreConstants.serviceImageURLField: url.absoluteString,
+        ])
+    }
+    
+    private func deleteImage(forService service: Service) {
+        let imageRef = storage
+            .reference()
+            .child("Service images")
+            .child(Hotel.id)
+            .child(service.category.rawValue)
+            .child(service.name)
+        
+        imageRef.delete() { error in
+            print("Error deleting image, \(String(describing: error))")
+        }
     }
     
 }

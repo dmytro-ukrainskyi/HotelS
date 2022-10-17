@@ -21,7 +21,7 @@ extension CategoriesCollectionViewController {
     }
     
     //MARK: - Private methods
-    private func logOut() {
+    func logOut() {
         loginManager.logOut {
             self.openLoginVC()
         }

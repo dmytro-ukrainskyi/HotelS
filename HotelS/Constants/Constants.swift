@@ -53,7 +53,8 @@ enum FStoreConstants {
     static let serviceDescriptionField = "description"
     static let servicePriceField = "price"
     static let serviceCategoryField = "category"
-    static let serviceImageField = "image"
+    static let serviceImageURLField = "imageURL"
+    static let serviceDocumentIDField = "documentID"
     
     static let roomsCollectionName = "rooms"
     static let roomIdField = "id"
