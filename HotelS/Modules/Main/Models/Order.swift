@@ -17,6 +17,7 @@ struct Order {
     var comment: String
     var cost: Double
     var status: Status
+    var documentID: String?
     
     //MARK: - Order status
     enum Status: String {

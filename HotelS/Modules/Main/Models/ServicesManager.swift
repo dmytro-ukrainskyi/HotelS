@@ -89,7 +89,6 @@ class ServicesManager {
         }
     }
     
-    //TODO: - Delete service image
     func delete(service: Service, completionHandler: @escaping ()->()) {
         let serviceRef = db
             .collection(FStoreConstants.hotelsCollectionName)

@@ -15,8 +15,10 @@ class OrdersManager {
     var orders = [Order]()
     
     //MARK: - Public methods
+    //TODO: - REFACTOR ORDER NUMBER
     func register(order: Order, completionHandler: @escaping ()->()) {
         let lastOrderQuery = getLastOrderQuery()
+        
         lastOrderQuery.getDocuments { (querySnapshot, error) in
             if error != nil {
                 print("Error saving order document (getting last order): \(String(describing: error))")
@@ -47,22 +49,15 @@ class OrdersManager {
     func updateStatusFor(order: Order,
                          to status: Order.Status,
                          completionHandler: @escaping ()->()) {
-        let ordersRef = db
+        let orderRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
-            .whereField(FStoreConstants.orderIdField, isEqualTo: order.id!)
+            .document(order.documentID!)
         
-        ordersRef.getDocuments { (querySnapshot, error) in
-            if error != nil {
-                print("Error loading orders: \(String(describing: error))")
-            } else {
-                let orderToUpdate = querySnapshot?.documents[0]
-                let orderRef = orderToUpdate?.reference
-                orderRef?.updateData([FStoreConstants.orderStatusField: status.rawValue])
-                completionHandler()
-            }
-        }
+        orderRef.updateData([FStoreConstants.orderStatusField: status.rawValue])
+        
+        completionHandler()
     }
     
     //MARK:  Private methods
@@ -103,8 +98,9 @@ class OrdersManager {
         let comment = data[FStoreConstants.orderCommentField] as! String
         let cost = data[FStoreConstants.orderCostField] as! Double
         let status = Order.Status(rawValue: statusString)
+        let documentID = data[FStoreConstants.orderDocumentIDField] as! String
         
-        let order = Order(name: name, id: id, room: room, dateOrdered: dateOrdered, datePicked: datePicked, comment: comment, cost: cost, status: status!)
+        let order = Order(name: name, id: id, room: room, dateOrdered: dateOrdered, datePicked: datePicked, comment: comment, cost: cost, status: status!, documentID: documentID)
         
         return order
     }
@@ -157,11 +153,15 @@ class OrdersManager {
     }
     
     private func save(order: Order) {
-        let ordersRef = db
+        let orderRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
-        ordersRef.addDocument(data: [
+            .document()
+        
+        let documentID = orderRef.documentID
+        
+        orderRef.setData([
             FStoreConstants.orderNameField: order.name,
             FStoreConstants.orderCommentField: order.comment,
             FStoreConstants.orderIdField: order.id!,
@@ -169,7 +169,8 @@ class OrdersManager {
             FStoreConstants.orderDateOrderedField: order.dateOrdered,
             FStoreConstants.orderDatePickedField: order.datePicked,
             FStoreConstants.orderCostField: order.cost,
-            FStoreConstants.orderStatusField: order.status.rawValue
+            FStoreConstants.orderStatusField: order.status.rawValue,
+            FStoreConstants.orderDocumentIDField: documentID
         ]) {error in
             if error != nil {
                 print("Error saving order, \(error!)")
