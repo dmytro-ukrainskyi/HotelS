@@ -10,7 +10,6 @@ import Foundation
 struct Order {
     
     var name: String
-    var id: Int?
     var room: Int
     var dateOrdered: Date
     var datePicked: Date

@@ -32,7 +32,6 @@ extension OrdersTableViewController {
         let order = ordersManager.orders[indexPath.row]
         
         cell.orderNameLabel?.text = order.name
-        cell.orderIdLabel?.text = "№ \(order.id!)"
         cell.roomIdLabel?.text = "\(order.room)"
         cell.dateOrderedLabel?.text = "Ordered: \(format(date: order.dateOrdered))"
         cell.datePickedLabel?.text = "Deliver at: \(format(date: order.datePicked))"

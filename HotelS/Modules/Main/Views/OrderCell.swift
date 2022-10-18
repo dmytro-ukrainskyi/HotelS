@@ -15,8 +15,6 @@ class OrderCell: UITableViewCell {
     
     @IBOutlet weak var orderNameLabel: UILabel?
     
-    @IBOutlet weak var orderIdLabel: UILabel?
-    
     @IBOutlet weak var roomIdLabel: UILabel?
     
     @IBOutlet weak var dateOrderedLabel: UILabel?

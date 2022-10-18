@@ -11,7 +11,7 @@ extension OrderViewController {
     
     //MARK: - Saving orders
     func saveOrder() {
-        orderManager.register(order: createOrder()) {
+        orderManager.save(order: createOrder()) {
             self.showSuccessAlert()
         }
     }
@@ -28,10 +28,10 @@ extension OrderViewController {
         let name = service?.name ?? ""
         let cost = service?.price ?? 0
         let room = Device.roomId
-        let currentDate = Date()
+        let dateOrdered = Date()
         let datePicked = datePicker.date
         
-        let order = Order(name: name, id: nil, room: room, dateOrdered: currentDate, datePicked: datePicked, comment: comment, cost: cost, status: .new)
+        let order = Order(name: name, room: room, dateOrdered: dateOrdered, datePicked: datePicked, comment: comment, cost: cost, status: .new)
         
         return order
     }

@@ -40,7 +40,6 @@ enum FStoreConstants {
     
     static let ordersCollectionName = "orders"
     static let orderNameField = "name"
-    static let orderIdField = "id"
     static let orderRoomField = "room"
     static let orderDateOrderedField = "dateOrdered"
     static let orderDatePickedField = "datePicked"
