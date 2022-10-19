@@ -57,8 +57,9 @@ enum FStoreConstants {
     static let serviceDocumentIDField = "documentID"
     
     static let roomsCollectionName = "rooms"
-    static let roomIdField = "id"
+    static let roomNumberField = "id"
     static let roomBillField = "bill"
+    static let roomDocumentIDField = "documentID"
 }
 
 enum UserDefaultsConstants {

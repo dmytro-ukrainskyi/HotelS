@@ -11,16 +11,33 @@ import Firebase
 class RoomsManager {
     //MARK: - Public properties
     let db = Firestore.firestore()
+    
     var rooms = [Room]()
     
     //MARK: - Public methods
+    //TODO: - Refactor using documentID
+    func saveRoom(roomNumber: Int) {
+        let roomRef = db
+            .collection(FStoreConstants.hotelsCollectionName)
+            .document(Hotel.id)
+            .collection(FStoreConstants.roomsCollectionName)
+            .document()
+        
+        let documentID = roomRef.documentID
+        
+        roomRef.setData([
+            FStoreConstants.roomNumberField: roomNumber,
+            FStoreConstants.roomBillField: 0,
+            FStoreConstants.roomDocumentIDField: documentID
+        ])
+    }
     
     func loadRooms(completionHandler: @escaping () -> ()) {
         let roomsRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .order(by: FStoreConstants.roomIdField)
+            .order(by: FStoreConstants.roomNumberField)
         
         roomsRef.addSnapshotListener { (querySnapshot, error) in
             if error != nil {
@@ -33,7 +50,7 @@ class RoomsManager {
                         let room = self.createRoom(from: document)
                         
                         self.rooms.append(room)
-                        
+                        //TODO: - Move DispatchQueue from here (?)
                         DispatchQueue.main.async {
                             completionHandler()
                         }
@@ -51,24 +68,19 @@ class RoomsManager {
     }
     
     func delete(room: Room, completionHandler: @escaping () -> ()) {
-        db
+        let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .whereField(FStoreConstants.roomIdField, isEqualTo: room.id)
-            .getDocuments { (querySnapshot, error) in
-                if error != nil {
-                    print("Error loading rooms: \(String(describing: error))")
-                } else {
-                    if let documentsToDelete = querySnapshot?.documents {
-                        self.deleteCancelledOrdersFor(room: room)
-                        
-                        for document in documentsToDelete {
-                            document.reference.delete()
-                        }
-                        completionHandler()
-                    }
-                }
+            .document(room.documentID!)
+        
+        roomRef.delete() { error in
+            if error != nil {
+                print("Error deleting room: \(String(describing: error))")
+            }
+                
+            self.deleteCancelledOrdersFor(room: room)
+                completionHandler()
             }
     }
     
@@ -76,10 +88,11 @@ class RoomsManager {
     private func createRoom(from document: QueryDocumentSnapshot) -> Room {
         let data = document.data()
         
-        let roomNumber = data[FStoreConstants.roomIdField] as! Int
+        let roomNumber = data[FStoreConstants.roomNumberField] as! Int
         let roomBill = data[FStoreConstants.roomBillField] as! Double
+        let documentID = data[FStoreConstants.roomDocumentIDField] as! String
         
-        let room = Room(id: roomNumber, bill: roomBill)
+        let room = Room(number: roomNumber, bill: roomBill, documentID: documentID)
         
         return room
     }
@@ -88,29 +101,23 @@ class RoomsManager {
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
-            .collection(FStoreConstants.roomsCollectionName).document("\(room.id)")
+            .collection(FStoreConstants.roomsCollectionName)
+            .document(room.documentID!)
         
-        roomRef.getDocument { (document, error) in
-            if error != nil {
-                print("Error loading room: \(String(describing: error))")
-            } else {
-                if let document = document, document.exists {
-                    roomRef.updateData([FStoreConstants.roomBillField: 0])
-                }
-            }
-        }
+        roomRef.updateData([FStoreConstants.roomBillField: 0])
     }
     
     private func deleteCancelledOrdersFor(room: Room) {
         let statusesToDelete = [Order.Status.new.rawValue, Order.Status.inProgress.rawValue, Order.Status.cancelled.rawValue]
         
-        db
+        let ordersRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
-            .whereField(FStoreConstants.orderRoomField, isEqualTo: room.id)
+            .whereField(FStoreConstants.orderRoomField, isEqualTo: room.number)
             .whereField(FStoreConstants.orderStatusField, in: statusesToDelete)
-            .getDocuments { (querySnapshot, error) in
+            
+        ordersRef.getDocuments { (querySnapshot, error) in
                 if error != nil {
                     print("Error loading orders: \(String(describing: error))")
                 } else {
@@ -124,13 +131,14 @@ class RoomsManager {
     }
     
     private func updateCompletedOrdersAsPaidFor(room: Room) {
-        db
+        let ordersRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
-            .whereField(FStoreConstants.orderRoomField, isEqualTo: room.id)
+            .whereField(FStoreConstants.orderRoomField, isEqualTo: room.number)
             .whereField(FStoreConstants.orderStatusField, isEqualTo: Order.Status.completed.rawValue)
-            .getDocuments { (querySnapshot, error) in
+            
+        ordersRef.getDocuments { (querySnapshot, error) in
                 if error != nil {
                     print("Error loading orders: \(String(describing: error))")
                 } else {
@@ -168,12 +176,14 @@ class RoomsManager {
 //    }
     
     func refundFor(order: Order, completionHandler: @escaping ()->()) {
-        let roomId = Device.roomId
+        let roomNumber = Device.roomNumber!
+        
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .document("\(roomId)")
+            .document("\(roomNumber)")
+        
         roomRef.getDocument { (document, error) in
             if error != nil {
                 print("Error loading room: \(String(describing: error))")

@@ -25,7 +25,7 @@ extension RoomsTableViewController {
         
         cell.delegate = self
         cell.room = room
-        cell.roomNumberLabel.text = "Room \(room.id)"
+        cell.roomNumberLabel.text = "Room \(room.number)"
         cell.roomBillLabel.text = "Total bill: \(room.bill.currencyString)"
         
         return cell

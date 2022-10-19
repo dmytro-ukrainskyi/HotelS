@@ -9,6 +9,7 @@ import Foundation
 
 extension RoomsTableViewController: RoomCellDelegate  {
     
+    //MARK: - Public methods
     func checkOut(room: Room) {
         roomsManager.checkOut(room: room) {
             self.showSuccessfulCheckoutAlertFor(room: room)

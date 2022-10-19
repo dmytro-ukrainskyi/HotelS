@@ -38,12 +38,23 @@ extension LoginViewController {
         present(alertController, animated: true)
     }
     
+    func showSuccessfulRegistrationAlert() {
+        let alertController = AlertBuilder(style: .alert)
+            .title("Hotel's account created")
+            .message("You can proceed to login")
+            .addButton("OK", style: .cancel, completionHandler: nil)
+            .alertController
+        
+        present(alertController, animated: true)
+    }
+    
     func showFailedAuthAlert() {
         let alertController = AlertBuilder(style: .alert)
             .title("Error signing in")
             .message("Invalid email or password")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .alertController
+        
         present(alertController, animated: true)
     }
     
@@ -52,6 +63,7 @@ extension LoginViewController {
             .title("Error signing up")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .alertController
+        
         present(alertController, animated: true)
     }
     

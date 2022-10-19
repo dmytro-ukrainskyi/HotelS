@@ -31,6 +31,11 @@ extension LoginViewController {
                                   password: password) { success in
             if success == false {
                 self.showFailedRegistrationAlert()
+            } else {
+                self.showSuccessfulRegistrationAlert()
+
+                self.emailTextField.text = email
+                self.passwordTextField.text = password
             }
         }
     }
@@ -45,8 +50,9 @@ extension LoginViewController {
     }
     
     private func loginAsAdmin() {
-        Device.setAdminStatus()
-        openCategoriesVC()
+        loginManager.loginAsAdmin {
+            self.openCategoriesVC()
+        }
     }
     
     private func askRoomNumber() {

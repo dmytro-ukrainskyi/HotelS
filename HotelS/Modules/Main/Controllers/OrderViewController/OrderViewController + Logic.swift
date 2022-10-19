@@ -9,13 +9,14 @@ import UIKit
 
 extension OrderViewController {
     
-    //MARK: - Saving orders
+    //MARK: - Public methods
     func saveOrder() {
         orderManager.save(order: createOrder()) {
             self.showSuccessAlert()
         }
     }
     
+    //MARK: - Private methods
     private func createOrder() -> Order {
         let comment: String
         
@@ -27,7 +28,7 @@ extension OrderViewController {
         
         let name = service?.name ?? ""
         let cost = service?.price ?? 0
-        let room = Device.roomId
+        let room = Device.roomNumber!
         let dateOrdered = Date()
         let datePicked = datePicker.date
         

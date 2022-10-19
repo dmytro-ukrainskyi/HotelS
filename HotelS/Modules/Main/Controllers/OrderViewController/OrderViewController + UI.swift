@@ -16,6 +16,7 @@ extension OrderViewController {
         servicePriceLabel.text = "\(service?.price.currencyString ?? "")"
         
         hideKeyboardWhenTappedAround()
+        
         datePicker.minimumDate = Date()
     }
     

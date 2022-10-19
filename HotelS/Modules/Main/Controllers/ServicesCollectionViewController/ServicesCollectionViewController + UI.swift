@@ -42,6 +42,7 @@ extension ServicesCollectionViewController: UIGestureRecognizerDelegate {
         if let indexPath = collectionView?.indexPathForItem(at: pointPressed) {
             let serviceToManage = servicesManager.services[indexPath.item]
             let actionSheet = createServiceActionSheet(for: serviceToManage)
+            
             show(actionSheet, at: indexPath)
         }
     }

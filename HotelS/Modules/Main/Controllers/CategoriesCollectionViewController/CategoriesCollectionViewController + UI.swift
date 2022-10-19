@@ -43,16 +43,17 @@ extension CategoriesCollectionViewController {
             .message("Invalid email or password")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .alertController
+        
         present(alertController, animated: true)
     }
     
+    //MARK: - Private methods
     private func setupNavigationBar() {
         navigationItem.title = Device.hotelName
 
         if !Device.isAdmin, navigationItem.rightBarButtonItems!.count > 1 {
             navigationItem.rightBarButtonItems?.removeLast()
         }
-
     }
     
 }

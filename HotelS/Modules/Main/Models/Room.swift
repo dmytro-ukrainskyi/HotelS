@@ -10,7 +10,8 @@ import Foundation
 struct Room {
     
     //MARK: - Public properties
-    var id: Int
+    var number: Int
     var bill: Double
+    var documentID: String?
     
 }

@@ -45,6 +45,7 @@ extension ServiceCreationViewController {
             .message("Service image is missing")
             .addButton("OK", style: .default, completionHandler: nil)
             .alertController
+        
         present(alertController, animated: true)
     }
     
@@ -54,6 +55,7 @@ extension ServiceCreationViewController {
             .message("Image size is more than 1MB")
             .addButton("OK", style: .default, completionHandler: nil)
             .alertController
+        
         present(alertController, animated: true)
     }
     

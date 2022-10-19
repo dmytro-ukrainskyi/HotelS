@@ -12,6 +12,7 @@ class OrdersManager {
     
     //MARK: - Public properties
     let db = Firestore.firestore()
+    
     var orders = [Order]()
     
     //MARK: - Public methods
@@ -126,12 +127,13 @@ class OrdersManager {
                 .whereField(FStoreConstants.orderStatusField, in: statusesToShow)
             
         } else {
-            let roomId = Device.roomId
+            let roomNumber = Device.roomNumber!
+            
             ordersRef = db
                 .collection(FStoreConstants.hotelsCollectionName)
                 .document(Hotel.id)
                 .collection(FStoreConstants.ordersCollectionName)
-                .whereField(FStoreConstants.orderRoomField, isEqualTo: roomId)
+                .whereField(FStoreConstants.orderRoomField, isEqualTo: roomNumber)
                 .whereField(FStoreConstants.orderStatusField, isNotEqualTo: Order.Status.paid.rawValue)
         }
         
@@ -151,12 +153,12 @@ class OrdersManager {
     }
     
     private func updateRoomsTotalBillWith(orderPrice: Double) {
-        let roomId = Device.roomId
+        let roomNumber = Device.roomNumber!
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .document(String(roomId))
+            .document(String(roomNumber))
         
         roomRef.getDocument { (document, error) in
             if error != nil {
