@@ -32,7 +32,7 @@ extension ServiceCreationViewController {
         }
     }
     
-    //TODO: - Prevent image from compressing while updating service
+    //TODO: Prevent image from compressing while updating service
     func updateService() {
         let service = createService()
         if let serviceImage = getImageData() {

@@ -12,7 +12,7 @@ struct Device {
     
     //MARK: - Public properties
     static var roomNumber: Int? {
-        getDeviceRoomId()
+        getDeviceRoomNumber()
     }
     
     static var isAdmin: Bool {
@@ -22,9 +22,6 @@ struct Device {
     static var hotelName: String {
         getHotelName()
     }
-    
-    //MARK: - Private properties
-    private static let db = Firestore.firestore()
     
     //MARK: - Public methods
     static func setAdminStatus() {
@@ -49,7 +46,7 @@ struct Device {
 
         
     //MARK: - Private methods
-    private static func getDeviceRoomId() -> Int {
+    private static func getDeviceRoomNumber() -> Int {
         let deviceRoom = UserDefaults.standard.integer(forKey: UserDefaultsConstants.roomNumber)
         
         return deviceRoom

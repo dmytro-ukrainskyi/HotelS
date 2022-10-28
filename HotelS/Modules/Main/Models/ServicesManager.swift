@@ -39,6 +39,7 @@ class ServicesManager {
             serviceWithID.documentID = documentID
             
             self.save(serviceImage: image, forService: serviceWithID)
+            
             completionHandler()
         }
         
@@ -66,6 +67,7 @@ class ServicesManager {
                     
                     self.services.append(service)
                 }
+                
                 completionHandler()
             }
         }
@@ -85,6 +87,7 @@ class ServicesManager {
             FStoreConstants.servicePriceField: service.price,
         ]) {_ in
             self.save(serviceImage: image, forService: service)
+            
             completionHandler()
         }
     }
@@ -98,6 +101,7 @@ class ServicesManager {
         
         serviceRef.delete() {_ in
             self.deleteImage(forService: service)
+            
             completionHandler()
         }
     }

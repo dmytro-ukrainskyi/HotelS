@@ -12,6 +12,7 @@ class OrdersManager {
     
     //MARK: - Public properties
     let db = Firestore.firestore()
+    let roomManager = RoomsManager()
     
     var orders = [Order]()
     
@@ -39,7 +40,8 @@ class OrdersManager {
                 print("Error saving order, \(error!)")
             }
             
-            self.updateRoomsTotalBillWith(orderPrice: order.cost)
+            self.roomManager.updateRoomsTotalBillWith(orderPrice: order.cost)
+            
             completionHandler()
         }
     }
@@ -150,28 +152,6 @@ class OrdersManager {
             .whereField(FStoreConstants.orderStatusField, isEqualTo: status.rawValue)
         
         return ordersRef
-    }
-    
-    private func updateRoomsTotalBillWith(orderPrice: Double) {
-        let roomNumber = Device.roomNumber!
-        let roomRef = db
-            .collection(FStoreConstants.hotelsCollectionName)
-            .document(Hotel.id)
-            .collection(FStoreConstants.roomsCollectionName)
-            .document(String(roomNumber))
-        
-        roomRef.getDocument { (document, error) in
-            if error != nil {
-                print("Error loading room: \(String(describing: error))")
-            } else {
-                if let document = document, document.exists {
-                    let bill = document.data()![FStoreConstants.roomBillField] as! Double
-                    let newBill = bill + orderPrice
-                    
-                    roomRef.updateData([FStoreConstants.roomBillField: newBill])
-                }
-            }
-        }
     }
     
 }

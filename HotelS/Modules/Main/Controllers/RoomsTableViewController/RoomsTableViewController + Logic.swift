@@ -18,7 +18,9 @@ extension RoomsTableViewController: RoomCellDelegate  {
     
     func loadRooms() {
         roomsManager.loadRooms {
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     

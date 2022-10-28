@@ -21,6 +21,7 @@ class LoginManager {
                     completionHandler: @escaping (_ success: Bool) -> ()) {
         Firebase.Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if error != nil {
+                print("Error signing in: \(String(describing: error))")
                 completionHandler(false)
             } else {
                 self.downloadHotelName {
@@ -60,6 +61,7 @@ class LoginManager {
                       completionHandler: @escaping (_ success: Bool) -> ()) {
         FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (_, error) in
             if error != nil {
+                print("Error registering: \(String(describing: error))")
                 completionHandler(false)
             } else {
                 self.saveHotelWith(id: email, name: hotelName)
@@ -99,6 +101,7 @@ class LoginManager {
                     let hotelName = document?.data()![FStoreConstants.hotelNameField] as! String
                     
                     Device.setHotelName(hotelName)
+                    
                     completionHandler()
                 }
             }

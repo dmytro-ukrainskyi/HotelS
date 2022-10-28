@@ -11,8 +11,6 @@ extension OrdersTableViewController {
     
     //MARK: - Public methods
     func setupUI() {
-        navigationItem.largeTitleDisplayMode = .never
-        
         registerOrderCell()
         
         setupNavigationBarTitle()
@@ -23,7 +21,6 @@ extension OrdersTableViewController {
             setupFilterPopUpButton()
         } else {
             navigationItem.rightBarButtonItem = nil
-            //getRoomBill()
         }
     }
     
@@ -49,10 +46,12 @@ extension OrdersTableViewController {
     }
     
     func setupNavigationBarTitle() {
+        navigationItem.largeTitleDisplayMode = .never
+
         if Device.isAdmin {
             title = .none
         } else {
-            //getRoomBill()
+            loadRoomBill()
         }
     }
     
@@ -86,6 +85,7 @@ extension OrdersTableViewController {
             alertBuilder = alertBuilder.addButton("Cancelled", style: .default)
             { _ in
                 self.updateStatusFor(order: order, to: .cancelled)
+                self.roomsManager.refundFor(order: order) {}
             }
         case .inProgress:
             alertBuilder = alertBuilder.addButton("Completed", style: .default)
@@ -95,6 +95,7 @@ extension OrdersTableViewController {
             alertBuilder = alertBuilder.addButton("Cancelled", style: .default)
             { _ in
                 self.updateStatusFor(order: order, to: .cancelled)
+                self.roomsManager.refundFor(order: order) {}
             }
         default:
             break
@@ -110,8 +111,10 @@ extension OrdersTableViewController {
             .message("Cancel order?")
             .addButton("Cancel", style: .destructive) { _ in
                 self.updateStatusFor(order: order, to: .cancelled)
+                
                 self.roomsManager.refundFor(order: order) {
                     self.tableView.reloadData()
+                    self.loadRoomBill()
                 }
             }
             .alertController

@@ -10,6 +10,14 @@ import Foundation
 extension OrdersTableViewController {
     
     //MARK: - Public methods
+    func loadRoomBill() {
+        roomsManager.getRoomBill() { bill in
+            DispatchQueue.main.async {
+                self.title = "Room: \(Device.roomNumber!)   Total bill: $\(bill)"
+            }
+        }
+    }
+    
     func loadDefaultOrders() {
         ordersManager.loadDefaultOrders {
             self.tableView.reloadData()

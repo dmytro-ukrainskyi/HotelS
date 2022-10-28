@@ -12,6 +12,5 @@ struct Room {
     //MARK: - Public properties
     var number: Int
     var bill: Double
-    var documentID: String?
     
 }

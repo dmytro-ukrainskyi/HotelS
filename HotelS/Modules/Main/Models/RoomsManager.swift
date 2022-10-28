@@ -15,20 +15,21 @@ class RoomsManager {
     var rooms = [Room]()
     
     //MARK: - Public methods
-    //TODO: - Refactor using documentID
     func saveRoom(roomNumber: Int) {
+        let defaultRoomBill = 0
+        
+        let documentID = String(roomNumber)
+        
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .document()
+            .document(documentID)
         
-        let documentID = roomRef.documentID
         
         roomRef.setData([
             FStoreConstants.roomNumberField: roomNumber,
-            FStoreConstants.roomBillField: 0,
-            FStoreConstants.roomDocumentIDField: documentID
+            FStoreConstants.roomBillField: defaultRoomBill,
         ])
     }
     
@@ -50,10 +51,8 @@ class RoomsManager {
                         let room = self.createRoom(from: document)
                         
                         self.rooms.append(room)
-                        //TODO: - Move DispatchQueue from here (?)
-                        DispatchQueue.main.async {
-                            completionHandler()
-                        }
+                        
+                        completionHandler()
                     }
                 }
             }
@@ -68,11 +67,13 @@ class RoomsManager {
     }
     
     func delete(room: Room, completionHandler: @escaping () -> ()) {
+        let roomDocumentID = String(room.number)
+        
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .document(room.documentID!)
+            .document(roomDocumentID)
         
         roomRef.delete() { error in
             if error != nil {
@@ -80,8 +81,82 @@ class RoomsManager {
             }
                 
             self.deleteCancelledOrdersFor(room: room)
-                completionHandler()
+            
+            completionHandler()
+        }
+    }
+    
+    func getRoomBill(completionHandler: @escaping (Double)->()) {
+        let roomNumber = Device.roomNumber!
+        
+        let roomDocumentID = String(roomNumber)
+
+        let roomRef = db
+            .collection(FStoreConstants.hotelsCollectionName)
+            .document(Hotel.id)
+            .collection(FStoreConstants.roomsCollectionName)
+            .document(roomDocumentID)
+
+        roomRef.getDocument { document, error in
+            if error != nil {
+                print("Error loading room: \(String(describing: error))")
+            } else {
+                if let document = document {
+                    let data = document.data()!
+                    let bill = data[FStoreConstants.roomBillField] as! Double
+                    
+                    completionHandler(bill)
+                }
             }
+        }
+    }
+    
+    func updateRoomsTotalBillWith(orderPrice: Double) {
+        let roomDocumentId = String(Device.roomNumber!)
+        
+        let roomRef = db
+            .collection(FStoreConstants.hotelsCollectionName)
+            .document(Hotel.id)
+            .collection(FStoreConstants.roomsCollectionName)
+            .document(roomDocumentId)
+        
+        roomRef.getDocument { (document, error) in
+            if error != nil {
+                print("Error loading room: \(String(describing: error))")
+            } else {
+                if let roomDocument = document {
+                    let bill = roomDocument.data()![FStoreConstants.roomBillField] as! Double
+                    let newBill = bill + orderPrice
+                    
+                    roomRef.updateData([FStoreConstants.roomBillField: newBill])
+                }
+            }
+        }
+    }
+    
+    func refundFor(order: Order, completionHandler: @escaping ()->()) {
+        let roomDocumentId = String(order.room)
+        
+        let roomRef = db
+            .collection(FStoreConstants.hotelsCollectionName)
+            .document(Hotel.id)
+            .collection(FStoreConstants.roomsCollectionName)
+            .document(roomDocumentId)
+        
+        roomRef.getDocument { document, error in
+            if error != nil {
+                print("Error loading room: \(String(describing: error))")
+            } else {
+                if let roomDocument = document {
+                    let bill = roomDocument.data()![FStoreConstants.roomBillField] as! Double
+                    let newBill = bill - order.cost
+                    
+                    roomRef.updateData([FStoreConstants.roomBillField: newBill])
+                    
+                    completionHandler()
+                }
+            }
+        }
     }
     
     //MARK: - Private methods
@@ -90,21 +165,24 @@ class RoomsManager {
         
         let roomNumber = data[FStoreConstants.roomNumberField] as! Int
         let roomBill = data[FStoreConstants.roomBillField] as! Double
-        let documentID = data[FStoreConstants.roomDocumentIDField] as! String
         
-        let room = Room(number: roomNumber, bill: roomBill, documentID: documentID)
+        let room = Room(number: roomNumber, bill: roomBill)
         
         return room
     }
     
     private func resetBillFor(room: Room) {
+        let newRoomBill = 0
+        
+        let roomDocumentID = String(room.number)
+        
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
-            .document(room.documentID!)
+            .document(roomDocumentID)
         
-        roomRef.updateData([FStoreConstants.roomBillField: 0])
+        roomRef.updateData([FStoreConstants.roomBillField: newRoomBill])
     }
     
     private func deleteCancelledOrdersFor(room: Room) {
@@ -152,49 +230,4 @@ class RoomsManager {
             }
     }
     
-    
-    //TODO: - Fix getRoomBill func
-//    func getRoomBill(completionHandler: @escaping ()->()) {
-//        let roomId = Device.roomId
-//
-//        let roomRef = db
-//            .collection(FStoreConstants.hotelsCollectionName)
-//            .document(Hotel.id)
-//            .collection(FStoreConstants.roomsCollectionName)
-//            .document("\(roomId)")
-//
-//        roomRef.getDocument { (document, error) in
-//            if error != nil {
-//                print("Error loading room: \(String(describing: error))")
-//            } else {
-//                if let document = document, document.exists {
-//                    let bill = document.data()![FStoreConstants.roomBillField] as! Double
-//                    completionHandler()
-//                }
-//            }
-//        }
-//    }
-    
-    func refundFor(order: Order, completionHandler: @escaping ()->()) {
-        let roomNumber = Device.roomNumber!
-        
-        let roomRef = db
-            .collection(FStoreConstants.hotelsCollectionName)
-            .document(Hotel.id)
-            .collection(FStoreConstants.roomsCollectionName)
-            .document("\(roomNumber)")
-        
-        roomRef.getDocument { (document, error) in
-            if error != nil {
-                print("Error loading room: \(String(describing: error))")
-            } else {
-                if let document = document, document.exists {
-                    let bill = document.data()![FStoreConstants.roomBillField] as! Double
-                    let newBill = bill - order.cost
-                    roomRef.updateData([FStoreConstants.roomBillField: newBill])
-                    completionHandler()
-                }
-            }
-        }
-    }
 }

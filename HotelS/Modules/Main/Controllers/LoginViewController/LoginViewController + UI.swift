@@ -21,14 +21,17 @@ extension LoginViewController {
             .addTextField(placeholder: "Password", keyboardType: .default)
             .addButton("Cancel", style: .cancel, completionHandler: nil)
         
-        //TODO: Update alert builder text field (?)
-        alertBuilder.alertController.textFields![2].isSecureTextEntry = true
+        let nameTextField = alertBuilder.alertController.textFields![0]
+        let emailTextField = alertBuilder.alertController.textFields![1]
+        let passwordTextField = alertBuilder.alertController.textFields![2]
+        
+        passwordTextField.isSecureTextEntry = true
         
         let alertController = alertBuilder
             .addButton("Create", style: .default) {_ in
-                let name = alertBuilder.alertController.textFields![0].text!
-                let email = alertBuilder.alertController.textFields![1].text!
-                let password = alertBuilder.alertController.textFields![2].text!
+                let name = nameTextField.text!
+                let email = emailTextField.text!
+                let password = passwordTextField.text!
                 
                 self.registerWith(hotelName: name, email: email, password: password)
                 
