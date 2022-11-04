@@ -11,10 +11,10 @@ import Firebase
 class OrdersManager {
     
     //MARK: - Public properties
-    let db = Firestore.firestore()
-    let roomManager = RoomsManager()
-    
     var orders = [Order]()
+    
+    //MARK: - Private properties
+    private let db = Firestore.firestore()
     
     //MARK: - Public methods
     func save(order: Order, completionHandler: @escaping ()->()) {
@@ -39,9 +39,7 @@ class OrdersManager {
             if error != nil {
                 print("Error saving order, \(error!)")
             }
-            
-            self.roomManager.updateRoomsTotalBillWith(orderPrice: order.cost)
-            
+                        
             completionHandler()
         }
     }

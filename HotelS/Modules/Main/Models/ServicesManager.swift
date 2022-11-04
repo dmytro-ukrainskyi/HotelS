@@ -13,10 +13,11 @@ import FirebaseFirestoreSwift
 class ServicesManager {
     
     //MARK: - Public properties
-    let db = Firestore.firestore()
-    let storage = Storage.storage()
-    
     var services = [Service]()
+    
+    //MARK: - Private properties
+    private let db = Firestore.firestore()
+    private let storage = Storage.storage()
     
     //MARK: - Public methods
     func save(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {

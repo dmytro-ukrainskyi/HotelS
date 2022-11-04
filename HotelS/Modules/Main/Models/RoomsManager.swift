@@ -10,10 +10,11 @@ import Firebase
 
 class RoomsManager {
     //MARK: - Public properties
-    let db = Firestore.firestore()
-    
     var rooms = [Room]()
     
+    //MARK: - Private properties
+    private let db = Firestore.firestore()
+
     //MARK: - Public methods
     func saveRoom(roomNumber: Int) {
         let defaultRoomBill = 0
@@ -63,6 +64,7 @@ class RoomsManager {
         resetBillFor(room: room)
         deleteCancelledOrdersFor(room: room)
         updateCompletedOrdersAsPaidFor(room: room)
+        
         completionHandler()
     }
     

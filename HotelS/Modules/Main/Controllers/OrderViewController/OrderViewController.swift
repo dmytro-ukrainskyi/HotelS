@@ -11,6 +11,7 @@ final class OrderViewController: UIViewController {
     
     //MARK: - Public properties
     let orderManager = OrdersManager()
+    let roomManager = RoomsManager()
     
     var service: Service?
         

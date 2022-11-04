@@ -10,9 +10,9 @@ import Firebase
 
 class LoginManager {
     
-    //MARK: - Public properties
-    let db = Firestore.firestore()
-    let roomManager = RoomsManager()
+    //MARK: - Private properties
+    private let db = Firestore.firestore()
+    private let roomManager = RoomsManager()
 
     //MARK: - Public methods
     //TODO:  Refactor completion handlers without using flags (?)

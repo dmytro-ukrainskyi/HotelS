@@ -11,8 +11,10 @@ extension OrderViewController {
     
     //MARK: - Public methods
     func saveOrder() {
-        orderManager.save(order: createOrder()) {
+        let order = createOrder()
+        orderManager.save(order: order) {
             self.showSuccessAlert()
+            self.roomManager.updateRoomsTotalBillWith(orderPrice: order.cost)
         }
     }
     
