@@ -11,7 +11,7 @@ import Firebase
 class OrdersManager {
     
     //MARK: - Public properties
-    var orders = [Order]()
+    private(set) var orders = [Order]()
     
     //MARK: - Private properties
     private let db = Firestore.firestore()

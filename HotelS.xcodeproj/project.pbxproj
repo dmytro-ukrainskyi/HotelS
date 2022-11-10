@@ -61,10 +61,10 @@
 		1381683328357CD9008BCD80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381683228357CD9008BCD80 /* AppDelegate.swift */; };
 		1381683528357CD9008BCD80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381683428357CD9008BCD80 /* SceneDelegate.swift */; };
 		1381683728357CD9008BCD80 /* CategoriesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381683628357CD9008BCD80 /* CategoriesCollectionViewController.swift */; };
-		1381683A28357CD9008BCD80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1381683828357CD9008BCD80 /* Main.storyboard */; };
 		1381683C28357CDA008BCD80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1381683B28357CDA008BCD80 /* Assets.xcassets */; };
 		1381683F28357CDA008BCD80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1381683D28357CDA008BCD80 /* LaunchScreen.storyboard */; };
 		1392B5D928F0D16E003EB158 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1392B5D828F0D16E003EB158 /* LoginManager.swift */; };
+		13EFF1CB291D6BAF00C0F854 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13EFF1CA291D6BAE00C0F854 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,11 +113,11 @@
 		1381683228357CD9008BCD80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1381683428357CD9008BCD80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1381683628357CD9008BCD80 /* CategoriesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewController.swift; sourceTree = "<group>"; };
-		1381683928357CD9008BCD80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1381683B28357CDA008BCD80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1381683E28357CDA008BCD80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1381684028357CDA008BCD80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1392B5D828F0D16E003EB158 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		13EFF1CA291D6BAE00C0F854 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,13 +294,11 @@
 		1381683128357CD9008BCD80 /* HotelS */ = {
 			isa = PBXGroup;
 			children = (
+				13EFF1C9291D566300C0F854 /* Resources */,
 				13093AB8284134BA0012F60D /* Constants */,
 				13093AB72841348C0012F60D /* Extentions */,
 				13093AB028412EF20012F60D /* Core */,
 				13093AB128412F310012F60D /* Modules */,
-				1381683B28357CDA008BCD80 /* Assets.xcassets */,
-				1381684028357CDA008BCD80 /* Info.plist */,
-				135DF7012836CBBC00CCAF76 /* GoogleService-Info.plist */,
 			);
 			path = HotelS;
 			sourceTree = "<group>";
@@ -338,7 +336,7 @@
 		1381684828357EA5008BCD80 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1381683828357CD9008BCD80 /* Main.storyboard */,
+				13EFF1CA291D6BAE00C0F854 /* Main.storyboard */,
 				1381683D28357CDA008BCD80 /* LaunchScreen.storyboard */,
 				135DF719283B9F3000CCAF76 /* CategoryCell.swift */,
 				135DF71E283BB52300CCAF76 /* ServiceCell.swift */,
@@ -347,6 +345,16 @@
 				135DF731283D41EF00CCAF76 /* OrderCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		13EFF1C9291D566300C0F854 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1381683B28357CDA008BCD80 /* Assets.xcassets */,
+				1381684028357CDA008BCD80 /* Info.plist */,
+				135DF7012836CBBC00CCAF76 /* GoogleService-Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -425,10 +433,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1381683F28357CDA008BCD80 /* LaunchScreen.storyboard in Resources */,
+				13EFF1CB291D6BAF00C0F854 /* Main.storyboard in Resources */,
 				135DF7022836CBBC00CCAF76 /* GoogleService-Info.plist in Resources */,
 				135DF733283D41EF00CCAF76 /* OrderCell.xib in Resources */,
 				1381683C28357CDA008BCD80 /* Assets.xcassets in Resources */,
-				1381683A28357CD9008BCD80 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,14 +496,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1381683828357CD9008BCD80 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1381683928357CD9008BCD80 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1381683D28357CDA008BCD80 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -630,7 +630,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 638X89N9H7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HotelS/Info.plist;
+				INFOPLIST_FILE = HotelS/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -659,7 +659,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 638X89N9H7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HotelS/Info.plist;
+				INFOPLIST_FILE = HotelS/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

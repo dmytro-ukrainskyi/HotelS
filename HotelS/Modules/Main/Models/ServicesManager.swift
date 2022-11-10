@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 class ServicesManager {
     
     //MARK: - Public properties
-    var services = [Service]()
+    private(set) var services = [Service]()
     
     //MARK: - Private properties
     private let db = Firestore.firestore()

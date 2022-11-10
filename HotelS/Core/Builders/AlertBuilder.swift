@@ -27,11 +27,13 @@ final class AlertBuilder {
     
     func title(_ text: String) -> AlertBuilder {
         alertController.title = text
+        
         return AlertBuilder(alertController)
     }
     
     func message(_ text: String) -> AlertBuilder {
         alertController.message = text
+        
         return AlertBuilder(alertController)
     }
     
@@ -39,7 +41,9 @@ final class AlertBuilder {
         let action = UIAlertAction(title: title, style: style) { (alertAction) in
             completionHandler?(self.alertController)
         }
+        
         alertController.addAction(action)
+        
         return AlertBuilder(alertController)
     }
     
@@ -48,6 +52,7 @@ final class AlertBuilder {
             textField.placeholder = placeholder
             textField.keyboardType = keyboardType
         }
+        
         return AlertBuilder(alertController)
     }
     

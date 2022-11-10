@@ -232,7 +232,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="39" id="Wqi-Os-VRr"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="31"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>

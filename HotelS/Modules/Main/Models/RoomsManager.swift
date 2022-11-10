@@ -9,12 +9,13 @@ import Foundation
 import Firebase
 
 class RoomsManager {
+    
     //MARK: - Public properties
-    var rooms = [Room]()
+    private(set) var rooms = [Room]()
     
     //MARK: - Private properties
     private let db = Firestore.firestore()
-
+    
     //MARK: - Public methods
     func saveRoom(roomNumber: Int) {
         let defaultRoomBill = 0
@@ -81,7 +82,7 @@ class RoomsManager {
             if error != nil {
                 print("Error deleting room: \(String(describing: error))")
             }
-                
+            
             self.deleteCancelledOrdersFor(room: room)
             
             completionHandler()
@@ -92,13 +93,13 @@ class RoomsManager {
         let roomNumber = Device.roomNumber!
         
         let roomDocumentID = String(roomNumber)
-
+        
         let roomRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
             .document(roomDocumentID)
-
+        
         roomRef.getDocument { document, error in
             if error != nil {
                 print("Error loading room: \(String(describing: error))")
@@ -196,18 +197,18 @@ class RoomsManager {
             .collection(FStoreConstants.ordersCollectionName)
             .whereField(FStoreConstants.orderRoomField, isEqualTo: room.number)
             .whereField(FStoreConstants.orderStatusField, in: statusesToDelete)
-            
+        
         ordersRef.getDocuments { (querySnapshot, error) in
-                if error != nil {
-                    print("Error loading orders: \(String(describing: error))")
-                } else {
-                    if let documentsToDelete = querySnapshot?.documents {
-                        for document in documentsToDelete {
-                            document.reference.delete()
-                        }
+            if error != nil {
+                print("Error loading orders: \(String(describing: error))")
+            } else {
+                if let documentsToDelete = querySnapshot?.documents {
+                    for document in documentsToDelete {
+                        document.reference.delete()
                     }
                 }
             }
+        }
     }
     
     private func updateCompletedOrdersAsPaidFor(room: Room) {
@@ -217,19 +218,19 @@ class RoomsManager {
             .collection(FStoreConstants.ordersCollectionName)
             .whereField(FStoreConstants.orderRoomField, isEqualTo: room.number)
             .whereField(FStoreConstants.orderStatusField, isEqualTo: Order.Status.completed.rawValue)
-            
+        
         ordersRef.getDocuments { (querySnapshot, error) in
-                if error != nil {
-                    print("Error loading orders: \(String(describing: error))")
-                } else {
-                    if let documentsToUpdate = querySnapshot?.documents {
-                        for document in documentsToUpdate {
-                            document.reference.updateData([
-                                FStoreConstants.orderStatusField: Order.Status.paid.rawValue])
-                        }
+            if error != nil {
+                print("Error loading orders: \(String(describing: error))")
+            } else {
+                if let documentsToUpdate = querySnapshot?.documents {
+                    for document in documentsToUpdate {
+                        document.reference.updateData([
+                            FStoreConstants.orderStatusField: Order.Status.paid.rawValue])
                     }
                 }
             }
+        }
     }
     
 }

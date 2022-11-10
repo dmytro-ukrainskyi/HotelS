@@ -23,43 +23,40 @@ struct Device {
         getHotelName()
     }
     
+    //MARK: - Private properties
+    private static let defaults = UserDefaults.standard
+    
     //MARK: - Public methods
     static func setAdminStatus() {
-        let defaults = UserDefaults.standard
-        
         defaults.set(true, forKey: UserDefaultsConstants.isAdmin)
         defaults.removeObject(forKey: UserDefaultsConstants.roomNumber)
     }
     
     static func setRoomNumber(_ roomNumber: Int) {
-        let defaults = UserDefaults.standard
-        
         defaults.set(false, forKey: UserDefaultsConstants.isAdmin)
         defaults.set(roomNumber, forKey: UserDefaultsConstants.roomNumber)
     }
     
     static func setHotelName(_ name: String) {
-        let defaults = UserDefaults.standard
-        
         defaults.set(name, forKey: UserDefaultsConstants.hotelName)
     }
 
         
     //MARK: - Private methods
     private static func getDeviceRoomNumber() -> Int {
-        let deviceRoom = UserDefaults.standard.integer(forKey: UserDefaultsConstants.roomNumber)
+        let deviceRoom = defaults.integer(forKey: UserDefaultsConstants.roomNumber)
         
         return deviceRoom
     }
     
     private static func isAdminDevice() -> Bool {
-        let isAdmin = UserDefaults.standard.bool(forKey: UserDefaultsConstants.isAdmin)
+        let isAdmin = defaults.bool(forKey: UserDefaultsConstants.isAdmin)
         
         return isAdmin
     }
     
     private static func getHotelName() -> String {
-        let hotelName = UserDefaults.standard.string(forKey: UserDefaultsConstants.hotelName)
+        let hotelName = defaults.string(forKey: UserDefaultsConstants.hotelName)
         
         return hotelName ?? ""
     }
