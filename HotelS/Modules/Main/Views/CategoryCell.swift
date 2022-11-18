@@ -13,5 +13,4 @@ class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var categoryNameLabel: UILabel?
     
     @IBOutlet weak var categoryImageView: UIImageView!
-    
 }

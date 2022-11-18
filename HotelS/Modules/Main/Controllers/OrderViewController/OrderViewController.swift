@@ -28,7 +28,7 @@ final class OrderViewController: UIViewController {
     
     @IBOutlet weak var deliveryTimeSwitch: UISwitch!
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,5 +45,4 @@ final class OrderViewController: UIViewController {
     @IBAction func deliveryTimeSwitchTapped(_ sender: UISwitch) {
         manageDatePicker()
     }
-    
 }

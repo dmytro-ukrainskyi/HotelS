@@ -52,5 +52,4 @@ extension ServicesCollectionViewController {
             destinationVC.serviceCategory = serviceCategory
         }
     }
-    
 }

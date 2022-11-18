@@ -109,7 +109,14 @@ class OrdersManager {
         let status = Order.Status(rawValue: statusString)
         let documentID = data[FStoreConstants.orderDocumentIDField] as! String
         
-        let order = Order(name: name, room: room, dateOrdered: dateOrdered, datePicked: datePicked, comment: comment, cost: cost, status: status!, documentID: documentID)
+        let order = Order(name: name,
+                          room: room,
+                          dateOrdered: dateOrdered,
+                          datePicked: datePicked,
+                          comment: comment,
+                          cost: cost,
+                          status: status!,
+                          documentID: documentID)
         
         return order
     }
@@ -151,5 +158,4 @@ class OrdersManager {
         
         return ordersRef
     }
-    
 }

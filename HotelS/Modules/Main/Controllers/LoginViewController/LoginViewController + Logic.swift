@@ -88,5 +88,4 @@ extension LoginViewController {
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(navigationController)
     }
-    
 }

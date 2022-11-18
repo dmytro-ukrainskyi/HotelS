@@ -15,5 +15,4 @@ class ServiceCell: UICollectionViewCell {
     @IBOutlet weak var serviceImageView: UIImageView!
     
     @IBOutlet weak var servicePriceLabel: UILabel!
-    
 }

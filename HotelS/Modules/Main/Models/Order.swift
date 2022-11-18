@@ -17,8 +17,11 @@ struct Order {
     var cost: Double
     var status: Status
     var documentID: String?
+}
+
+//MARK: - Order Status
+extension Order {
     
-    //MARK: - Order status
     enum Status: String {
         case new = "New"
         case inProgress = "In progress"
@@ -26,5 +29,4 @@ struct Order {
         case paid = "Paid"
         case cancelled = "Cancelled"
     }
-    
 }

@@ -31,5 +31,4 @@ extension ServicesCollectionViewController {
             self.loadServices()
         }
     }
-    
 }

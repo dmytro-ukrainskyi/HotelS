@@ -13,7 +13,7 @@ final class CategoriesCollectionViewController: UICollectionViewController {
     let loginManager = LoginManager()
     let serviceCategories = Service.categories
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,6 +28,5 @@ final class CategoriesCollectionViewController: UICollectionViewController {
         //showAuthorizationAlert()
         logOut()
     }
-    
 }
 

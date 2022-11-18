@@ -13,5 +13,4 @@ struct Hotel {
     static var id: String {
         (Auth.auth().currentUser?.email)!
     }
-    
 }

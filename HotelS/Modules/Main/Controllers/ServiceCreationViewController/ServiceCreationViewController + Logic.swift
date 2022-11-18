@@ -76,5 +76,4 @@ extension ServiceCreationViewController {
         
         return imageData
     }
-    
 }

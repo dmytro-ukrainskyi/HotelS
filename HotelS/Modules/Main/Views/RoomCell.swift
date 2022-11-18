@@ -38,5 +38,4 @@ class RoomCell: UITableViewCell {
     @IBAction func checkOutButtonTapped(_ sender: UIButton) {
         delegate?.checkOut(room: room!)
     }
-    
 }

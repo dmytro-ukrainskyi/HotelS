@@ -12,5 +12,4 @@ struct Room {
     //MARK: - Public properties
     var number: Int
     var bill: Double
-    
 }

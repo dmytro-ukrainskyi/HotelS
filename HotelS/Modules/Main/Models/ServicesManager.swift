@@ -43,7 +43,6 @@ class ServicesManager {
             
             completionHandler()
         }
-        
     }
     
     func loadServicesFor(category: Service.Category, completionHandler: @escaping ()->()) {
@@ -171,5 +170,4 @@ class ServicesManager {
             print("Error deleting image, \(String(describing: error))")
         }
     }
-    
 }

@@ -34,7 +34,7 @@ final class ServiceCreationViewController: UIViewController {
     var serviceCategory: Service.Category?
     var serviceToEdit: Service?
         
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,5 +75,4 @@ extension ServiceCreationViewController: UINavigationControllerDelegate, UIImage
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-    
 }

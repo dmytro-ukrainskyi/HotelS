@@ -21,7 +21,7 @@ final class LoginViewController: UIViewController {
     //MARK: - Public properties
     let loginManager = LoginManager()
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
                     
@@ -36,5 +36,4 @@ final class LoginViewController: UIViewController {
     @IBAction func registerButtonTapped(_ sender: UIButton) {
         showRegistrationAlert()
     }
-
 }

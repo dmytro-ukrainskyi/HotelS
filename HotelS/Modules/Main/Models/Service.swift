@@ -10,7 +10,7 @@ import UIKit
 
 struct Service {
     
-    //MARK: - Service properties
+    //MARK: - Instance Properties
     var name: String
     var description: String
     var price: Double
@@ -18,24 +18,8 @@ struct Service {
     var imageURL: URL?
     var documentID: String?
     
-    //MARK: - Categories
+    //MARK: - Static Properties
     static let categories: [String] = Category.allCases.map({$0.rawValue})
-    
-    enum Category: String, CaseIterable {
-        case houseKeeping = "Housekeeping"
-        case roomService = "Room Service"
-        case roomFood = "Food Delivery"
-        case roomDrinks = "Drinks Delivery"
-        case restaurant = "Restaurant"
-        case vip = "VIP"
-        case wellness = "Wellness"
-        case activity = "Activities"
-        case personal = "Personal Services"
-        case delivery = "Delivery"
-        case other = "Other"
-        case roomUpgrade = "Room Upgrade"
-        case checkOut = "Check Out"
-    }
     
     static let categoriesImages: [UIImage] = [
         UIImage(named: "housekeeping")!,
@@ -52,5 +36,24 @@ struct Service {
         UIImage(named: "room upgrade")!,
         UIImage(named: "check out")!
     ]
+}
+
+//MARK: - Service Category
+extension Service {
     
+    enum Category: String, CaseIterable {
+        case houseKeeping = "Housekeeping"
+        case roomService = "Room Service"
+        case roomFood = "Food Delivery"
+        case roomDrinks = "Drinks Delivery"
+        case restaurant = "Restaurant"
+        case vip = "VIP"
+        case wellness = "Wellness"
+        case activity = "Activities"
+        case personal = "Personal Services"
+        case delivery = "Delivery"
+        case other = "Other"
+        case roomUpgrade = "Room Upgrade"
+        case checkOut = "Check Out"
+    }
 }

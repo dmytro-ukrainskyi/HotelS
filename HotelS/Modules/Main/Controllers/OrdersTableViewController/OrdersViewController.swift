@@ -16,12 +16,11 @@ final class OrdersTableViewController: UITableViewController {
     let ordersManager = OrdersManager()
     let roomsManager = RoomsManager()
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         loadDefaultOrders()
     }
-    
 }
