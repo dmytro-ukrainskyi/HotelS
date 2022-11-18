@@ -9,7 +9,7 @@ import UIKit
 
 extension LoginViewController {
     
-    //MARK: Public methods
+    //MARK: - Public methods
     func signIn() {
         let email = emailTextField.text!
         let password = passwordTextField.text!
@@ -40,7 +40,7 @@ extension LoginViewController {
         }
     }
     
-    //MARK: Private methods
+    //MARK: - Private methods
     private func login() {
         if adminSwitch.isOn {
             loginAsAdmin()
