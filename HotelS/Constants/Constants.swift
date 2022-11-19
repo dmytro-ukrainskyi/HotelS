@@ -8,13 +8,11 @@
 import Foundation
 
 enum DateFormatConstants {
-    
     static let dateFormat = "MMM d, HH:mm"
     static let dateFormatterLocale = "en_US_POSIX"
 }
 
 enum StoryboardConstants {
-    
     static let categoriesViewControllerIdentifier = "categoriesVC"
     static let loginViewControllerIdentifier = "loginVC"
     static let serviceCreationViewControllerIdentifier = "serviceCreationVC"
@@ -37,7 +35,6 @@ enum StoryboardConstants {
 }
 
 enum FStoreConstants {
-    
     static let hotelsCollectionName = "hotels"
     static let hotelNameField = "name"
     
@@ -65,7 +62,6 @@ enum FStoreConstants {
 }
 
 enum UserDefaultsConstants {
-    
     static let roomNumber = "room"
     static let isAdmin = "isAdmin"
     static let hotelName = "hotelName"

@@ -71,4 +71,5 @@ extension ServicesCollectionViewController: UIGestureRecognizerDelegate {
         
         return alertController
     }
+
 }

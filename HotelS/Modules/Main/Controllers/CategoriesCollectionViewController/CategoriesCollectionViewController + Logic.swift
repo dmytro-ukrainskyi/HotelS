@@ -33,4 +33,5 @@ extension CategoriesCollectionViewController {
         
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC)
     }
+    
 }

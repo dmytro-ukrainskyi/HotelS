@@ -58,4 +58,5 @@ extension CategoriesCollectionViewController {
             navigationItem.rightBarButtonItems?.removeLast()
         }
     }
+    
 }

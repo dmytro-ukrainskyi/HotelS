@@ -37,4 +37,5 @@ extension RoomsTableViewController {
             delete(room: roomsManager.rooms[indexPath.row])
         }
     }
+    
 }

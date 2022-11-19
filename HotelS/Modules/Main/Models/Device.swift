@@ -60,4 +60,5 @@ struct Device {
         
         return hotelName ?? ""
     }
+    
 }

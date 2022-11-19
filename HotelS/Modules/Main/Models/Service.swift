@@ -10,7 +10,7 @@ import UIKit
 
 struct Service {
     
-    //MARK: - Instance Properties
+    //MARK: - Service properties
     var name: String
     var description: String
     var price: Double
@@ -18,28 +18,8 @@ struct Service {
     var imageURL: URL?
     var documentID: String?
     
-    //MARK: - Static Properties
+    //MARK: - Categories
     static let categories: [String] = Category.allCases.map({$0.rawValue})
-    
-    static let categoriesImages: [UIImage] = [
-        UIImage(named: "housekeeping")!,
-        UIImage(named: "room service")!,
-        UIImage(named: "food delivery")!,
-        UIImage(named: "drinks delivery")!,
-        UIImage(named: "restaurant")!,
-        UIImage(named: "vip")!,
-        UIImage(named: "wellness")!,
-        UIImage(named: "activities")!,
-        UIImage(named: "personal service")!,
-        UIImage(named: "delivery")!,
-        UIImage(named: "other")!,
-        UIImage(named: "room upgrade")!,
-        UIImage(named: "check out")!
-    ]
-}
-
-//MARK: - Service Category
-extension Service {
     
     enum Category: String, CaseIterable {
         case houseKeeping = "Housekeeping"
@@ -56,4 +36,21 @@ extension Service {
         case roomUpgrade = "Room Upgrade"
         case checkOut = "Check Out"
     }
+    
+    static let categoriesImages: [UIImage] = [
+        UIImage(named: "housekeeping")!,
+        UIImage(named: "room service")!,
+        UIImage(named: "food delivery")!,
+        UIImage(named: "drinks delivery")!,
+        UIImage(named: "restaurant")!,
+        UIImage(named: "vip")!,
+        UIImage(named: "wellness")!,
+        UIImage(named: "activities")!,
+        UIImage(named: "personal service")!,
+        UIImage(named: "delivery")!,
+        UIImage(named: "other")!,
+        UIImage(named: "room upgrade")!,
+        UIImage(named: "check out")!
+    ]
+    
 }

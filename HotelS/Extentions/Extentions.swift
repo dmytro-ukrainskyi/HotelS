@@ -18,6 +18,7 @@ extension UIViewController {
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
+    
 }
 
 extension Double {
@@ -30,6 +31,7 @@ extension Double {
             return numberFormatter.string(from: self as NSNumber)!
         }
     }
+    
 }
 
 
