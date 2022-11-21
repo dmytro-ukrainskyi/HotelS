@@ -11,19 +11,20 @@ extension CategoriesCollectionViewController {
     
     //MARK: - Public methods
     func checkCredentials(email: String, password: String) {
-        loginManager.signInWith(email: email, password: password) { success in
-            if success == true {
-                self.logOut()
+        loginManager
+            .signInWith(email: email, password: password) { [weak self] success in
+            if success {
+                self?.logOut()
             } else {
-                self.showFailedAuthAlert()
+                self?.showFailedAuthAlert()
             }
         }
     }
     
     //MARK: - Private methods
     func logOut() {
-        loginManager.logOut {
-            self.openLoginVC()
+        loginManager.logOut { [weak self] in
+            self?.openLoginVC()
         }
     }
     

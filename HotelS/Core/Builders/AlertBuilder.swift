@@ -9,12 +9,15 @@ import UIKit
 
 final class AlertBuilder {
     
-    // MARK: - Public properties
+    //MARK: - Public properties
+    var textFields: [UITextField]? {
+        return alertController.textFields
+    }
     
-    let alertController: UIAlertController
+    // MARK: - Private properties
+    private let alertController: UIAlertController
     
-    // MARK: - Init
-    
+    // MARK: - Lifecycle
     init(style: UIAlertController.Style) {
         self.alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
     }
@@ -23,7 +26,16 @@ final class AlertBuilder {
         self.alertController = alertController
     }
     
+    // TODO: - remove debugging code
+    deinit {
+        print("alert builder was dealocated")
+    }
+    
+    
     // MARK: - Public methods
+    func build() -> UIAlertController {
+        return alertController
+    }
     
     func title(_ text: String) -> AlertBuilder {
         alertController.title = text
@@ -38,7 +50,7 @@ final class AlertBuilder {
     }
     
     func addButton(_ title: String, style: UIAlertAction.Style, completionHandler: ((UIAlertController) -> Void)?) -> AlertBuilder {
-        let action = UIAlertAction(title: title, style: style) { (alertAction) in
+        let action = UIAlertAction(title: title, style: style) { alertAction in
             completionHandler?(self.alertController)
         }
         
@@ -48,7 +60,7 @@ final class AlertBuilder {
     }
     
     func addTextField(placeholder: String, keyboardType: UIKeyboardType) -> AlertBuilder {
-        alertController.addTextField { (textField) in
+        alertController.addTextField { textField in
             textField.placeholder = placeholder
             textField.keyboardType = keyboardType
         }

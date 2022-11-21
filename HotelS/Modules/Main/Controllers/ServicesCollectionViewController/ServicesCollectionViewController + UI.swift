@@ -67,7 +67,7 @@ extension ServicesCollectionViewController: UIGestureRecognizerDelegate {
             .addButton("Delete", style: .destructive) {_ in
                 self.delete(service: service)
             }
-            .alertController
+            .build()
         
         return alertController
     }

@@ -101,7 +101,7 @@ extension OrdersTableViewController {
             break
         }
         
-        let alertController = alertBuilder.alertController
+        let alertController = alertBuilder.build()
         
         return alertController
     }
@@ -117,7 +117,7 @@ extension OrdersTableViewController {
                     self.loadRoomBill()
                 }
             }
-            .alertController
+            .build()
         
         return alertController
     }

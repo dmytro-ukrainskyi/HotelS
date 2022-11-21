@@ -12,7 +12,8 @@ extension OrderViewController {
     //MARK: - Public methods
     func saveOrder() {
         let order = createOrder()
-        orderManager.save(order: order) {
+        orderManager.save(order: order) { [weak self] in
+            guard let self = self else { return }
             self.showSuccessAlert()
             self.roomManager.updateRoomsTotalBillWith(orderPrice: order.cost)
         }
@@ -20,23 +21,24 @@ extension OrderViewController {
     
     //MARK: - Private methods
     private func createOrder() -> Order {
-        let comment: String
-        
-        if commentTextField.text == "" {
-            comment = "No comment added"
-        } else {
-            comment = "Comment: \(commentTextField.text ?? "")"
-        }
-        
-        let name = service?.name ?? ""
-        let cost = service?.price ?? 0
+        let name = service.name
         let room = Device.roomNumber!
         let dateOrdered = Date()
         let datePicked = datePicker.date
+        let comment = createOrderComment()
+        let cost = service.price
         
         let order = Order(name: name, room: room, dateOrdered: dateOrdered, datePicked: datePicked, comment: comment, cost: cost, status: .new)
         
         return order
+    }
+    
+    private func createOrderComment() -> String {
+        if commentTextField.text == "" {
+            return "No comment added"
+        } else {
+            return "Comment: \(commentTextField.text ?? "")"
+        }
     }
     
     //MARK: - Navigation

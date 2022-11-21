@@ -10,7 +10,7 @@ import Firebase
 import FirebaseStorage
 import FirebaseFirestoreSwift
 
-class ServicesManager {
+final class ServicesManager {
     
     //MARK: - Public properties
     private(set) var services = [Service]()

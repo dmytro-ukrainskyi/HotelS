@@ -26,8 +26,9 @@ extension ServiceCreationViewController {
     func saveService() {
         let service = createService()
         if let serviceImage = getImageData() {
-            serviceManager.save(service: service, withImage: serviceImage) {
-                self.showSuccessAlert()
+            serviceManager.save(service: service,
+                                withImage: serviceImage) { [weak self] in
+                self?.showSuccessAlert()
             }
         }
     }
@@ -36,8 +37,9 @@ extension ServiceCreationViewController {
     func updateService() {
         let service = createService()
         if let serviceImage = getImageData() {
-            serviceManager.update(service: service, withImage: serviceImage) {
-                self.showSuccessAlert()
+            serviceManager.update(service: service,
+                                  withImage: serviceImage) { [weak self] in
+                self?.showSuccessAlert()
             }
         }
     }
@@ -64,7 +66,8 @@ extension ServiceCreationViewController {
     }
     
     private func getImageData() -> Data? {
-        guard let imageData = serviceImageView.image?.jpegData(compressionQuality: 0.5) else {
+        guard let imageData = serviceImageView.image?
+            .jpegData(compressionQuality: 0.5) else {
             showMissingImageError()
             return nil
         }

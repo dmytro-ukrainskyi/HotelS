@@ -14,13 +14,14 @@ extension LoginViewController {
         let email = emailTextField.text!
         let password = passwordTextField.text!
         
-        loginManager.signInWith(email: email, password: password) { success in
-            if success == true {
-                self.login()
-            } else {
-                self.showFailedAuthAlert()
+        loginManager
+            .signInWith(email: email, password: password) { [weak self] success in
+                if success {
+                    self?.login()
+                } else {
+                    self?.showFailedAuthAlert()
+                }
             }
-        }
     }
     
     func registerWith(hotelName: String,
@@ -28,14 +29,15 @@ extension LoginViewController {
                       password: String) {
         loginManager.registerWith(hotelName: hotelName,
                                   email: email,
-                                  password: password) { success in
-            if success == false {
-                self.showFailedRegistrationAlert()
-            } else {
+                                  password: password) { [weak self] success in
+            guard let self = self else { return }
+            if success {
                 self.showSuccessfulRegistrationAlert()
-
+                
                 self.emailTextField.text = email
                 self.passwordTextField.text = password
+            } else {
+                self.showFailedRegistrationAlert()
             }
         }
     }
@@ -50,35 +52,38 @@ extension LoginViewController {
     }
     
     private func loginAsAdmin() {
-        loginManager.loginAsAdmin {
-            self.openCategoriesVC()
+        loginManager.loginAsAdmin { [weak self] in
+            self?.openCategoriesVC()
         }
     }
     
     private func askRoomNumber() {
-        let alertBuilder = AlertBuilder(style: .alert)
+        var alertBuilder = AlertBuilder(style: .alert)
             .message("Enter room number")
             .addTextField(placeholder: "Room number", keyboardType: .numberPad)
             .addButton("Cancel", style: .cancel, completionHandler: nil)
         
-        let alertController = alertBuilder
-            .addButton("Login", style: .default) {_ in
-                let textField = alertBuilder.alertController.textFields?.first
+        alertBuilder = alertBuilder
+            .addButton("Login", style: .default) {
+                [weak self, unowned alertBuilder] _ in
+                let roomNumberString = alertBuilder.textFields![0].text!
                 
-                let roomNumberString = textField!.text
-                
-                if let roomNumber = Int(roomNumberString!) {
-                    self.loginAsGuest(roomNumber: roomNumber)
+                guard let roomNumber = Int(roomNumberString) else {
+                    self?.showInvalidRoomNumberAlert()
+                    return
                 }
+                
+                self?.loginAsGuest(roomNumber: roomNumber)
             }
-            .alertController
+        
+        let alertController = alertBuilder.build()
         
         present(alertController, animated: true)
     }
     
     private func loginAsGuest(roomNumber: Int) {
-        loginManager.loginAsGuest(roomNumber: roomNumber) {
-            self.openCategoriesVC()
+        loginManager.loginAsGuest(roomNumber: roomNumber) { [weak self] in
+            self?.openCategoriesVC()
         }
     }
     

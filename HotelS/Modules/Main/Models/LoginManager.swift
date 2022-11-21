@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class LoginManager {
+final class LoginManager {
     
     //MARK: - Private properties
     private let db = Firestore.firestore()

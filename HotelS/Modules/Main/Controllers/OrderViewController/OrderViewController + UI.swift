@@ -20,7 +20,7 @@ extension OrderViewController {
         datePicker.minimumDate = Date()
     }
     
-    func manageDatePicker() {
+    func switchDatePickerState() {
         if deliveryTimeSwitch.isOn {
             datePicker.isEnabled = true
         } else {
@@ -32,10 +32,10 @@ extension OrderViewController {
     func showSuccessAlert() {
         let alertController = AlertBuilder(style: .alert)
             .message("Order successfully saved")
-            .addButton("OK", style: .default) {_ in
-                self.goBackToServicesVC()
+            .addButton("OK", style: .default) { [weak self] _ in
+                self?.goBackToServicesVC()
             }
-            .alertController
+            .build()
         
         present(alertController, animated: true)
     }

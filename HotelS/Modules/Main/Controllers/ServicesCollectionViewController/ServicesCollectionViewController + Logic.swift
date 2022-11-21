@@ -11,8 +11,8 @@ extension ServicesCollectionViewController {
     
     //MARK: - Public methods
     func loadServices() {
-        servicesManager.loadServicesFor(category: serviceCategory!) {
-            self.collectionView.reloadData()
+        servicesManager.loadServicesFor(category: serviceCategory!) { [weak self] in
+            self?.collectionView.reloadData()
         }
     }
     
@@ -27,8 +27,8 @@ extension ServicesCollectionViewController {
     }
     
     func delete(service: Service) {
-        self.servicesManager.delete(service: service) {
-            self.loadServices()
+        self.servicesManager.delete(service: service) { [weak self] in
+            self?.loadServices()
         }
     }
     

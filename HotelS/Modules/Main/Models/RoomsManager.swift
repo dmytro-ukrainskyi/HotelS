@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class RoomsManager {
+final class RoomsManager {
     
     //MARK: - Public properties
     private(set) var rooms = [Room]()

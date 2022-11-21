@@ -13,7 +13,7 @@ final class OrderViewController: UIViewController {
     let orderManager = OrdersManager()
     let roomManager = RoomsManager()
     
-    var service: Service?
+    var service: Service!
         
     //MARK: - IBOutlets
     @IBOutlet weak var serviceNameLabel: UILabel!
@@ -43,7 +43,7 @@ final class OrderViewController: UIViewController {
     }
 
     @IBAction func deliveryTimeSwitchTapped(_ sender: UISwitch) {
-        manageDatePicker()
+        switchDatePickerState()
     }
     
 }

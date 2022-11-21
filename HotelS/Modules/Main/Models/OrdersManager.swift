@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class OrdersManager {
+final class OrdersManager {
     
     //MARK: - Public properties
     private(set) var orders = [Order]()

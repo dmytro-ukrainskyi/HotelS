@@ -14,7 +14,7 @@ extension RoomsTableViewController {
         let alertController = AlertBuilder(style: .alert)
             .message("Room \(room.number) has been checked out")
             .addButton("OK", style: .cancel, completionHandler: nil)
-            .alertController
+            .build()
         
         present(alertController, animated: true)
     }
@@ -23,7 +23,7 @@ extension RoomsTableViewController {
         let alertController = AlertBuilder(style: .alert)
             .message("Room \(room.number) has been deleted")
             .addButton("OK", style: .cancel, completionHandler: nil)
-            .alertController
+            .build()
         
         present(alertController, animated: true)
     }

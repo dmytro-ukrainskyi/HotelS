@@ -16,26 +16,22 @@ extension CategoriesCollectionViewController {
     }
     
     func showAuthorizationAlert() {
-        let alertBuilder = AlertBuilder(style: .alert)
+        var alertBuilder = AlertBuilder(style: .alert)
             .title("Confirm log out")
             .addTextField(placeholder: "Email", keyboardType: .emailAddress)
             .addTextField(placeholder: "Password", keyboardType: .default)
             .addButton("Cancel", style: .cancel, completionHandler: nil)
         
-        let emailTextField = alertBuilder.alertController.textFields![0]
-        let passwordTextField = alertBuilder.alertController.textFields![1]
+        alertBuilder = alertBuilder
+            .addButton("Log out", style: .default) {
+            [weak self, unowned alertBuilder] _ in
+            let email = alertBuilder.textFields![0].text!
+            let password = alertBuilder.textFields![1].text!
+            
+            self?.checkCredentials(email: email, password: password)
+        }
         
-        passwordTextField.isSecureTextEntry = true
-
-        
-        let alertController = alertBuilder
-            .addButton("Log out", style: .default) {_ in
-                let email = emailTextField.text!
-                let password = passwordTextField.text!
-                
-                self.checkCredentials(email: email, password: password)
-            }
-            .alertController
+        let alertController = alertBuilder.build()
         
         present(alertController, animated: true)
     }
@@ -45,7 +41,7 @@ extension CategoriesCollectionViewController {
             .title("Error logging out")
             .message("Invalid email or password")
             .addButton("OK", style: .cancel, completionHandler: nil)
-            .alertController
+            .build()
         
         present(alertController, animated: true)
     }
@@ -53,7 +49,7 @@ extension CategoriesCollectionViewController {
     //MARK: - Private methods
     private func setupNavigationBar() {
         navigationItem.title = Device.hotelName
-
+        
         if !Device.isAdmin, navigationItem.rightBarButtonItems!.count > 1 {
             navigationItem.rightBarButtonItems?.removeLast()
         }

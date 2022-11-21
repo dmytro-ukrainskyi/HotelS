@@ -11,28 +11,26 @@ extension OrdersTableViewController {
     
     //MARK: - Public methods
     func loadRoomBill() {
-        roomsManager.getRoomBill() { bill in
-            DispatchQueue.main.async {
-                self.title = "Room: \(Device.roomNumber!)   Total bill: $\(bill)"
-            }
+        roomsManager.getRoomBill() { [weak self] bill in
+            self?.title = "Room: \(Device.roomNumber!)   Total bill: $\(bill)"
         }
     }
     
     func loadDefaultOrders() {
-        ordersManager.loadDefaultOrders {
-            self.tableView.reloadData()
+        ordersManager.loadDefaultOrders { [weak self] in
+            self?.tableView.reloadData()
         }
     }
     
     func loadOrdersWith(status: Order.Status) {
-        ordersManager.loadOrdersWith(status: status) {
-            self.tableView.reloadData()
+        ordersManager.loadOrdersWith(status: status) { [weak self] in
+            self?.tableView.reloadData()
         }
     }
     
     func updateStatusFor(order: Order, to status: Order.Status) {
-        ordersManager.updateStatusFor(order: order, to: status) {
-            self.tableView.reloadData()
+        ordersManager.updateStatusFor(order: order, to: status) { [weak self] in
+            self?.tableView.reloadData()
         }
     }
     
