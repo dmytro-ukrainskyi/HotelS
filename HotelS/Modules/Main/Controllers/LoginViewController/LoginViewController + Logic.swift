@@ -31,6 +31,7 @@ extension LoginViewController {
                                   email: email,
                                   password: password) { [weak self] success in
             guard let self = self else { return }
+            
             if success {
                 self.showSuccessfulRegistrationAlert()
                 
@@ -63,17 +64,18 @@ extension LoginViewController {
             .addTextField(placeholder: "Room number", keyboardType: .numberPad)
             .addButton("Cancel", style: .cancel, completionHandler: nil)
         
+        let roomNumberTextField: UITextField? = alertBuilder.textFields![0]
+        
         alertBuilder = alertBuilder
             .addButton("Login", style: .default) {
-                [weak self, unowned alertBuilder] _ in
-                let roomNumberString = alertBuilder.textFields![0].text!
+                let roomNumberString = roomNumberTextField?.text
                 
-                guard let roomNumber = Int(roomNumberString) else {
-                    self?.showInvalidRoomNumberAlert()
+                guard let roomNumber = Int(roomNumberString!) else {
+                    self.showInvalidRoomNumberAlert()
                     return
                 }
                 
-                self?.loginAsGuest(roomNumber: roomNumber)
+                self.loginAsGuest(roomNumber: roomNumber)
             }
         
         let alertController = alertBuilder.build()

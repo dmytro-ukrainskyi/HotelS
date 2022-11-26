@@ -26,12 +26,6 @@ final class AlertBuilder {
         self.alertController = alertController
     }
     
-    // TODO: - remove debugging code
-    deinit {
-        print("alert builder was dealocated")
-    }
-    
-    
     // MARK: - Public methods
     func build() -> UIAlertController {
         return alertController
@@ -49,9 +43,9 @@ final class AlertBuilder {
         return AlertBuilder(alertController)
     }
     
-    func addButton(_ title: String, style: UIAlertAction.Style, completionHandler: ((UIAlertController) -> Void)?) -> AlertBuilder {
+    func addButton(_ title: String, style: UIAlertAction.Style, completionHandler: (() -> Void)?) -> AlertBuilder {
         let action = UIAlertAction(title: title, style: style) { alertAction in
-            completionHandler?(self.alertController)
+            completionHandler?()
         }
         
         alertController.addAction(action)

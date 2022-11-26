@@ -35,7 +35,12 @@ final class ServicesManager {
             FStoreConstants.servicePriceField: service.price,
             FStoreConstants.serviceCategoryField: service.category.rawValue,
             FStoreConstants.serviceDocumentIDField: serviceRef.documentID
-        ]) {_ in
+        ]) { error in
+            if let error = error {
+                print("Error saving service: \(error)")
+                return
+            }
+            
             var serviceWithID = service
             serviceWithID.documentID = documentID
             
@@ -43,7 +48,6 @@ final class ServicesManager {
             
             completionHandler()
         }
-        
     }
     
     func loadServicesFor(category: Service.Category, completionHandler: @escaping ()->()) {
@@ -54,17 +58,17 @@ final class ServicesManager {
             .order(by: FStoreConstants.serviceNameField)
             .whereField(FStoreConstants.serviceCategoryField, isEqualTo: category.rawValue)
         
-        servicesRef.addSnapshotListener { (querySnapshot, error) in
-            guard error == nil else {
-                print("Error loading services: \(String(describing: error))")
+        servicesRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error loading services: \(error)")
                 return
             }
             
-            if let snapshotDocuments = querySnapshot?.documents {
+            if let documents = querySnapshot?.documents {
                 self.services = []
                 
-                for document in snapshotDocuments {
-                    let service = self.createService(from: document)
+                for document in documents {
+                    let service = self.getService(from: document)
                     
                     self.services.append(service)
                 }
@@ -75,7 +79,6 @@ final class ServicesManager {
     }
     
     func update(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
-        
         let serviceRef = db
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
@@ -100,7 +103,12 @@ final class ServicesManager {
             .collection(FStoreConstants.servicesCollectionName)
             .document(service.documentID!)
         
-        serviceRef.delete() {_ in
+        serviceRef.delete() { error in
+            if let error = error {
+                print("Error deleting service: \(error)")
+                return
+            }
+            
             self.deleteImage(forService: service)
             
             completionHandler()
@@ -108,7 +116,7 @@ final class ServicesManager {
     }
     
     //MARK: - Private methods
-    private func createService(from document: QueryDocumentSnapshot) -> Service {
+    private func getService(from document: QueryDocumentSnapshot) -> Service {
         let data = document.data()
         let categoryString = data[FStoreConstants.serviceCategoryField] as! String
         let imageURLString = data[FStoreConstants.serviceImageURLField] as? String
@@ -125,7 +133,7 @@ final class ServicesManager {
         return service
     }
     
-    private func save(serviceImage: Data ,forService service: Service) {
+    private func save(serviceImage: Data, forService service: Service) {
         let uploadRef = storage
             .reference()
             .child("Service images")
@@ -135,7 +143,7 @@ final class ServicesManager {
         
         let uploadTask = uploadRef.putData(serviceImage)
         
-        uploadTask.observe(.success) {_ in
+        uploadTask.observe(.success) { _ in
             uploadRef.downloadURL { result in
                 switch result {
                 case .success(let url):
@@ -168,7 +176,7 @@ final class ServicesManager {
             .child(service.name)
         
         imageRef.delete() { error in
-            print("Error deleting image, \(String(describing: error))")
+            print("Error deleting image: \(String(describing: error))")
         }
     }
     

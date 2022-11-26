@@ -16,6 +16,8 @@ final class OrdersManager {
     //MARK: - Private properties
     private let db = Firestore.firestore()
     
+    private var listener: ListenerRegistration?
+    
     //MARK: - Public methods
     func save(order: Order, completionHandler: @escaping ()->()) {
         let orderRef = db
@@ -35,9 +37,10 @@ final class OrdersManager {
             FStoreConstants.orderCostField: order.cost,
             FStoreConstants.orderStatusField: order.status.rawValue,
             FStoreConstants.orderDocumentIDField: documentID
-        ]) {error in
-            if error != nil {
-                print("Error saving order, \(error!)")
+        ]) { error in
+            if let error = error {
+                print("Error saving order: \(error)")
+                return
             }
                         
             completionHandler()
@@ -69,32 +72,39 @@ final class OrdersManager {
         completionHandler()
     }
     
+    func stopUpdating() {
+        listener?.remove()
+    }
+    
     //MARK:  Private methods
     private func loadOrdersFrom(query: Query, completionHandler: @escaping ()->()) {
         let ordersRef = query
         
-        ordersRef.addSnapshotListener { querySnapshot, error in
-            if error != nil {
-                print("Error loading orders: \(String(describing: error))")
-            } else {
-                if let snapshotDocuments = querySnapshot?.documents {
-                    self.orders = []
+        listener?.remove()
+        
+        listener = ordersRef.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                print("Error loading orders: \(error)")
+                return
+            }
+            
+            if let snapshotDocuments = querySnapshot?.documents {
+                self.orders = []
+                
+                for document in snapshotDocuments {
+                    let order = self.getOrder(from: document)
                     
-                    for document in snapshotDocuments {
-                        let order = self.loadOrder(from: document)
-                        
-                        self.orders.append(order)
-                    }
-                    
-                    self.orders = self.orders.sorted(by: {$0.dateOrdered > $1.dateOrdered})
-                    
-                    completionHandler()
+                    self.orders.append(order)
                 }
+                    
+                self.orders = self.orders.sorted(by: { $0.dateOrdered > $1.dateOrdered })
+                
+                completionHandler()
             }
         }
     }
     
-    private func loadOrder(from document: QueryDocumentSnapshot) -> Order {
+    private func getOrder(from document: QueryDocumentSnapshot) -> Order {
         let data = document.data()
         let dateOrderedTimestamp = data[FStoreConstants.orderDateOrderedField] as! Timestamp
         let datePickedTimestamp = data[FStoreConstants.orderDatePickedField] as! Timestamp
@@ -134,7 +144,8 @@ final class OrdersManager {
                 .document(Hotel.id)
                 .collection(FStoreConstants.ordersCollectionName)
                 .whereField(FStoreConstants.orderRoomField, isEqualTo: roomNumber)
-                .whereField(FStoreConstants.orderStatusField, isNotEqualTo: Order.Status.paid.rawValue)
+                .whereField(FStoreConstants.orderStatusField,
+                            isNotEqualTo: Order.Status.paid.rawValue)
         }
         
         return ordersRef

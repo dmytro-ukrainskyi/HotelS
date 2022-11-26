@@ -12,13 +12,14 @@ extension RoomsTableViewController: RoomCellDelegate  {
     //MARK: - Public methods
     func checkOut(room: Room) {
         roomsManager.checkOut(room: room) { [weak self] in
+            self?.loadRooms()
             self?.showSuccessfulCheckoutAlertFor(room: room)
         }
     }
     
     func loadRooms() {
         roomsManager.loadRooms { [weak self] in
-                self?.tableView.reloadData()
+            self?.tableView.reloadData()
         }
     }
     

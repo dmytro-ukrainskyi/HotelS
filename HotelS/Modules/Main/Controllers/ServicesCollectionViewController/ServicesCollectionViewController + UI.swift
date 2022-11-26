@@ -23,7 +23,9 @@ extension ServicesCollectionViewController: UIGestureRecognizerDelegate {
     
     //MARK: - Gesture recognition
     private func setupLongGestureRecognizerOnCollection() {
-        let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
+        let longPressedGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleLongPress(gestureRecognizer:)))
         
         longPressedGesture.minimumPressDuration = 0.5
         longPressedGesture.delegate = self
@@ -61,10 +63,10 @@ extension ServicesCollectionViewController: UIGestureRecognizerDelegate {
     func createServiceActionSheet(for service: Service) -> UIAlertController {
         let alertController = AlertBuilder(style: .actionSheet)
             .message("Manage service")
-            .addButton("Edit", style: .default) {_ in
+            .addButton("Edit", style: .default) {
                 self.edit(service: service)
             }
-            .addButton("Delete", style: .destructive) {_ in
+            .addButton("Delete", style: .destructive) {
                 self.delete(service: service)
             }
             .build()

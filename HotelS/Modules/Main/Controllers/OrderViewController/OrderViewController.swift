@@ -28,13 +28,12 @@ final class OrderViewController: UIViewController {
     
     @IBOutlet weak var deliveryTimeSwitch: UISwitch!
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
     }
-    
     
     //MARK: - IBActions
     

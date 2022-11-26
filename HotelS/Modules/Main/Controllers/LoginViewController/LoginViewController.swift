@@ -21,7 +21,7 @@ final class LoginViewController: UIViewController {
     //MARK: - Public properties
     let loginManager = LoginManager()
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
                     

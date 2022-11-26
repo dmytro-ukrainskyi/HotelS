@@ -10,7 +10,7 @@ import UIKit
 class CategoryCell: UICollectionViewCell {
     
     //MARK: - IBOutlets
-    @IBOutlet weak var categoryNameLabel: UILabel?
+    @IBOutlet weak var categoryNameLabel: UILabel!
     
     @IBOutlet weak var categoryImageView: UIImageView!
     

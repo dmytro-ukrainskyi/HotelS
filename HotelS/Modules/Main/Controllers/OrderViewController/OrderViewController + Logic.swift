@@ -13,9 +13,8 @@ extension OrderViewController {
     func saveOrder() {
         let order = createOrder()
         orderManager.save(order: order) { [weak self] in
-            guard let self = self else { return }
-            self.showSuccessAlert()
-            self.roomManager.updateRoomsTotalBillWith(orderPrice: order.cost)
+            self?.roomManager.updateRoomsTotalBillWith(orderPrice: order.cost)
+            self?.showSuccessAlert()
         }
     }
     

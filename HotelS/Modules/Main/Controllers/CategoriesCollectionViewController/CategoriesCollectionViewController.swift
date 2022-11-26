@@ -13,7 +13,7 @@ final class CategoriesCollectionViewController: UICollectionViewController {
     let loginManager = LoginManager()
     let serviceCategories = Service.categories
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -25,6 +25,7 @@ final class CategoriesCollectionViewController: UICollectionViewController {
     
     //MARK: - IBActions
     @IBAction func logOutButtonTapped(_ sender: UIBarButtonItem) {
+        // TODO: - Disable logout without authorization
         //showAuthorizationAlert()
         logOut()
     }

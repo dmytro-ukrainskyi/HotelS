@@ -15,8 +15,8 @@ extension OrdersTableViewController {
     }
     
     //MARK: - Table View Data Source
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int {
         return ordersManager.orders.count
     }
     
@@ -27,7 +27,9 @@ extension OrdersTableViewController {
     
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardConstants.orderCellReuseIdentifier, for: indexPath) as! OrderCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: StoryboardConstants.orderCellReuseIdentifier,
+            for: indexPath) as! OrderCell
         
         let order = ordersManager.orders[indexPath.row]
         
@@ -43,14 +45,14 @@ extension OrdersTableViewController {
     }
     
     //MARK: - Table View Delegate
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedOrder = ordersManager.orders[indexPath.item]
         
         if !Device.isAdmin, selectedOrder.status == .new {
             let actionSheet = createRoomActionSheet(for: selectedOrder)
             show(actionSheet, at: indexPath)
-        } else if Device.isAdmin, selectedOrder.status == .new || selectedOrder.status == .inProgress {
+        } else if Device.isAdmin,
+                    selectedOrder.status == .new || selectedOrder.status == .inProgress {
             let actionSheet = createAdminActionSheet(for: selectedOrder)
             show(actionSheet, at: indexPath)
         }

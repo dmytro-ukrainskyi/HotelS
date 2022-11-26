@@ -22,13 +22,15 @@ extension CategoriesCollectionViewController {
             .addTextField(placeholder: "Password", keyboardType: .default)
             .addButton("Cancel", style: .cancel, completionHandler: nil)
         
+        let emailTextField: UITextField? = alertBuilder.textFields?[0]
+        let passwordTextField: UITextField? = alertBuilder.textFields?[1]
+        
         alertBuilder = alertBuilder
             .addButton("Log out", style: .default) {
-            [weak self, unowned alertBuilder] _ in
-            let email = alertBuilder.textFields![0].text!
-            let password = alertBuilder.textFields![1].text!
+            let email = emailTextField?.text
+            let password = passwordTextField?.text
             
-            self?.checkCredentials(email: email, password: password)
+            self.checkCredentials(email: email!, password: password!)
         }
         
         let alertController = alertBuilder.build()

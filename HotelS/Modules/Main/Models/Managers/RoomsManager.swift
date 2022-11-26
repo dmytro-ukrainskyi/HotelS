@@ -42,21 +42,22 @@ final class RoomsManager {
             .collection(FStoreConstants.roomsCollectionName)
             .order(by: FStoreConstants.roomNumberField)
         
-        roomsRef.addSnapshotListener { (querySnapshot, error) in
-            if error != nil {
-                print("Error loading rooms: \(String(describing: error))")
-            } else {
-                if let snapshotDocuments = querySnapshot?.documents {
-                    self.rooms = []
-                    
-                    for document in snapshotDocuments {
-                        let room = self.createRoom(from: document)
-                        
-                        self.rooms.append(room)
-                        
-                        completionHandler()
-                    }
+        roomsRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error loading rooms: \(error)")
+                return
+            }
+            
+            if let snapshotDocuments = querySnapshot?.documents {
+                self.rooms = []
+                
+                for document in snapshotDocuments {
+                    let room = self.getRoom(from: document)
+                
+                    self.rooms.append(room)
                 }
+                
+                completionHandler()
             }
         }
     }
@@ -79,8 +80,9 @@ final class RoomsManager {
             .document(roomDocumentID)
         
         roomRef.delete() { error in
-            if error != nil {
-                print("Error deleting room: \(String(describing: error))")
+            if let error = error {
+                print("Error deleting room: \(error)")
+                return
             }
             
             self.deleteCancelledOrdersFor(room: room)
@@ -101,15 +103,15 @@ final class RoomsManager {
             .document(roomDocumentID)
         
         roomRef.getDocument { document, error in
-            if error != nil {
-                print("Error loading room: \(String(describing: error))")
-            } else {
-                if let document = document {
-                    let data = document.data()!
-                    let bill = data[FStoreConstants.roomBillField] as! Double
-                    
-                    completionHandler(bill)
-                }
+            if let error = error {
+                print("Error loading room: \(error)")
+                return
+            }
+            
+            if let data = document?.data() {
+                let bill = data[FStoreConstants.roomBillField] as! Double
+                
+                completionHandler(bill)
             }
         }
     }
@@ -123,16 +125,17 @@ final class RoomsManager {
             .collection(FStoreConstants.roomsCollectionName)
             .document(roomDocumentId)
         
-        roomRef.getDocument { (document, error) in
-            if error != nil {
-                print("Error loading room: \(String(describing: error))")
-            } else {
-                if let roomDocument = document {
-                    let bill = roomDocument.data()![FStoreConstants.roomBillField] as! Double
-                    let newBill = bill + orderPrice
-                    
-                    roomRef.updateData([FStoreConstants.roomBillField: newBill])
-                }
+        roomRef.getDocument { document, error in
+            if let error = error {
+                print("Error loading room: \(error)")
+                return
+            }
+            
+            if let data = document?.data() {
+                let bill = data[FStoreConstants.roomBillField] as! Double
+                let newBill = bill + orderPrice
+                
+                roomRef.updateData([FStoreConstants.roomBillField: newBill])
             }
         }
     }
@@ -147,23 +150,24 @@ final class RoomsManager {
             .document(roomDocumentId)
         
         roomRef.getDocument { document, error in
-            if error != nil {
-                print("Error loading room: \(String(describing: error))")
-            } else {
-                if let roomDocument = document {
-                    let bill = roomDocument.data()![FStoreConstants.roomBillField] as! Double
-                    let newBill = bill - order.cost
+            if let error = error {
+                print("Error loading room: \(error)")
+                return
+            }
+            
+            if let data = document?.data() {
+                let bill = data[FStoreConstants.roomBillField] as! Double
+                let newBill = bill - order.cost
                     
-                    roomRef.updateData([FStoreConstants.roomBillField: newBill])
+                roomRef.updateData([FStoreConstants.roomBillField: newBill])
                     
-                    completionHandler()
-                }
+                completionHandler()
             }
         }
     }
     
     //MARK: - Private methods
-    private func createRoom(from document: QueryDocumentSnapshot) -> Room {
+    private func getRoom(from document: QueryDocumentSnapshot) -> Room {
         let data = document.data()
         
         let roomNumber = data[FStoreConstants.roomNumberField] as! Int
@@ -189,7 +193,9 @@ final class RoomsManager {
     }
     
     private func deleteCancelledOrdersFor(room: Room) {
-        let statusesToDelete = [Order.Status.new.rawValue, Order.Status.inProgress.rawValue, Order.Status.cancelled.rawValue]
+        let statusesToDelete = [Order.Status.new.rawValue,
+                                Order.Status.inProgress.rawValue,
+                                Order.Status.cancelled.rawValue]
         
         let ordersRef = db
             .collection(FStoreConstants.hotelsCollectionName)
@@ -199,13 +205,14 @@ final class RoomsManager {
             .whereField(FStoreConstants.orderStatusField, in: statusesToDelete)
         
         ordersRef.getDocuments { (querySnapshot, error) in
-            if error != nil {
-                print("Error loading orders: \(String(describing: error))")
-            } else {
-                if let documentsToDelete = querySnapshot?.documents {
-                    for document in documentsToDelete {
-                        document.reference.delete()
-                    }
+            if let error = error {
+                print("Error loading orders: \(error)")
+                return
+            }
+               
+            if let documentsToDelete = querySnapshot?.documents {
+                for document in documentsToDelete {
+                    document.reference.delete()
                 }
             }
         }
@@ -220,14 +227,15 @@ final class RoomsManager {
             .whereField(FStoreConstants.orderStatusField, isEqualTo: Order.Status.completed.rawValue)
         
         ordersRef.getDocuments { (querySnapshot, error) in
-            if error != nil {
-                print("Error loading orders: \(String(describing: error))")
-            } else {
-                if let documentsToUpdate = querySnapshot?.documents {
-                    for document in documentsToUpdate {
-                        document.reference.updateData([
-                            FStoreConstants.orderStatusField: Order.Status.paid.rawValue])
-                    }
+            if let error = error {
+                print("Error loading orders: \(error)")
+                return
+            }
+            
+            if let documentsToUpdate = querySnapshot?.documents {
+                for document in documentsToUpdate {
+                    document.reference.updateData([
+                        FStoreConstants.orderStatusField: Order.Status.paid.rawValue])
                 }
             }
         }

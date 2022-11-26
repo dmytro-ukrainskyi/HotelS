@@ -31,7 +31,7 @@ extension ServiceCreationViewController {
     func showSuccessAlert() {
         let alertController = AlertBuilder(style: .alert)
             .message("Service successfully saved")
-            .addButton("OK", style: .default) {_ in
+            .addButton("OK", style: .default) {
                 self.goBackToServicesVC()
             }
             .build()

@@ -12,7 +12,7 @@ class RoomsTableViewController: UITableViewController {
     //MARK: - Public properties
     let roomsManager = RoomsManager()
             
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 

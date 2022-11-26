@@ -13,20 +13,20 @@ final class LoginManager {
     //MARK: - Private properties
     private let db = Firestore.firestore()
     private let roomManager = RoomsManager()
-
+    
     //MARK: - Public methods
-    //TODO:  Refactor completion handlers without using flags (?)
     func signInWith(email: String,
                     password: String,
                     completionHandler: @escaping (_ success: Bool) -> ()) {
-        Firebase.Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if error != nil {
-                print("Error signing in: \(String(describing: error))")
+        Firebase.Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            if let error = error {
+                print("Error signing in: \(error)")
                 completionHandler(false)
-            } else {
-                self.downloadHotelName {
-                    completionHandler(true)
-                }
+                return
+            }
+            
+            self.downloadHotelName {
+                completionHandler(true)
             }
         }
     }
@@ -38,9 +38,14 @@ final class LoginManager {
             .collection(FStoreConstants.roomsCollectionName)
             .whereField(FStoreConstants.roomNumberField, isEqualTo: roomNumber)
         
-        roomsRef.getDocuments { documents, error in
-            if documents!.isEmpty {
-                self.roomManager.saveRoom(roomNumber: roomNumber)
+        roomsRef.getDocuments { [weak self] querySnapshot, error in
+            if let error = error {
+                print("Error getting rooms: \(error)")
+                return
+            }
+            
+            if let querySnapshot = querySnapshot, querySnapshot.isEmpty {
+                self?.roomManager.saveRoom(roomNumber: roomNumber)
             }
         }
         
@@ -59,23 +64,24 @@ final class LoginManager {
                       email: String,
                       password: String,
                       completionHandler: @escaping (_ success: Bool) -> ()) {
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { (_, error) in
-            if error != nil {
-                print("Error registering: \(String(describing: error))")
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { _, error in
+            if let error = error {
+                print("Error registering: \(error)")
                 completionHandler(false)
-            } else {
-                self.saveHotelWith(id: email, name: hotelName)
-                
-                completionHandler(true)
+                return
             }
             
+            self.saveHotelWith(id: email, name: hotelName)
+                
+            completionHandler(true)
         }
     }
     
     func logOut(completionHandler: @escaping () -> ()) {
         do {
             try FirebaseAuth.Auth.auth().signOut()
-                completionHandler()
+            
+            completionHandler()
         } catch {
             print("Error signing out")
         }
@@ -95,13 +101,16 @@ final class LoginManager {
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .getDocument { document, error in
-                if error != nil {
-                    print("Error loading hotel: \(String(describing: error))")
-                } else {
-                    let hotelName = document?.data()![FStoreConstants.hotelNameField] as! String
-                    
+                if let error = error {
+                    print("Error loading hotel: \(error)")
+                    return
+                }
+                
+                if let data = document?.data() {
+                    let hotelName = data[FStoreConstants.hotelNameField] as! String
+                        
                     Device.setHotelName(hotelName)
-                    
+                        
                     completionHandler()
                 }
             }

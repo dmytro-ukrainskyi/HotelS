@@ -9,6 +9,7 @@ import Foundation
 
 struct Order {
     
+    //MARK: - Order Properties
     var name: String
     var room: Int
     var dateOrdered: Date

@@ -48,7 +48,7 @@
 		135DF722283BD2E700CCAF76 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DF721283BD2E700CCAF76 /* OrderViewController.swift */; };
 		135DF724283C282600CCAF76 /* OrderViewController + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DF723283C282600CCAF76 /* OrderViewController + UI.swift */; };
 		135DF728283D213700CCAF76 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DF727283D213700CCAF76 /* Constants.swift */; };
-		135DF72D283D33F000CCAF76 /* OrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DF72C283D33F000CCAF76 /* OrdersViewController.swift */; };
+		135DF72D283D33F000CCAF76 /* OrdersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DF72C283D33F000CCAF76 /* OrdersTableViewController.swift */; };
 		135DF732283D41EF00CCAF76 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DF730283D41EF00CCAF76 /* OrderCell.swift */; };
 		135DF733283D41EF00CCAF76 /* OrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 135DF731283D41EF00CCAF76 /* OrderCell.xib */; };
 		136F1E04286790AE00A7EF6A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 136F1E03286790AE00A7EF6A /* FirebaseAuth */; };
@@ -102,7 +102,7 @@
 		135DF721283BD2E700CCAF76 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		135DF723283C282600CCAF76 /* OrderViewController + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OrderViewController + UI.swift"; sourceTree = "<group>"; };
 		135DF727283D213700CCAF76 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		135DF72C283D33F000CCAF76 /* OrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewController.swift; sourceTree = "<group>"; };
+		135DF72C283D33F000CCAF76 /* OrdersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersTableViewController.swift; sourceTree = "<group>"; };
 		135DF730283D41EF00CCAF76 /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
 		135DF731283D41EF00CCAF76 /* OrderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCell.xib; sourceTree = "<group>"; };
 		136F1E09286F75A900A7EF6A /* ServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesManager.swift; sourceTree = "<group>"; };
@@ -232,6 +232,17 @@
 			path = RoomsTableViewController;
 			sourceTree = "<group>";
 		};
+		135C223B29312DA900E9BE9B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1392B5D828F0D16E003EB158 /* LoginManager.swift */,
+				136F1E09286F75A900A7EF6A /* ServicesManager.swift */,
+				136F1E0B2871E6CA00A7EF6A /* OrdersManager.swift */,
+				136F1E0D2871E6DC00A7EF6A /* RoomsManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		135DF718283B8E1700CCAF76 /* CategoriesCollectionViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,7 +278,7 @@
 		135DF72B283D33C600CCAF76 /* OrdersTableViewController */ = {
 			isa = PBXGroup;
 			children = (
-				135DF72C283D33F000CCAF76 /* OrdersViewController.swift */,
+				135DF72C283D33F000CCAF76 /* OrdersTableViewController.swift */,
 				13093ABC28427BAF0012F60D /* OrdersTableViewController + UI.swift */,
 				13093ABE284294580012F60D /* OrdersTableViewController + Logic.swift */,
 				13093ACA2842C3520012F60D /* OrdersTableViewController + TableView.swift */,
@@ -320,15 +331,12 @@
 		1381684728357E75008BCD80 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1392B5D828F0D16E003EB158 /* LoginManager.swift */,
 				137340BB2850E5E90064A615 /* Hotel.swift */,
 				13093AD528476A0E0012F60D /* Device.swift */,
 				135DF714283A9B7500CCAF76 /* Service.swift */,
-				136F1E09286F75A900A7EF6A /* ServicesManager.swift */,
 				135DF712283A997900CCAF76 /* Order.swift */,
-				136F1E0B2871E6CA00A7EF6A /* OrdersManager.swift */,
 				135DF710283A993100CCAF76 /* Room.swift */,
-				136F1E0D2871E6DC00A7EF6A /* RoomsManager.swift */,
+				135C223B29312DA900E9BE9B /* Managers */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -485,7 +493,7 @@
 				1343FFB7284BB366000E9552 /* CategoriesCollectionViewController + CollectionView.swift in Sources */,
 				13093AC12842984C0012F60D /* ServiceCreationViewController + Logic.swift in Sources */,
 				13093ACB2842C3530012F60D /* OrdersTableViewController + TableView.swift in Sources */,
-				135DF72D283D33F000CCAF76 /* OrdersViewController.swift in Sources */,
+				135DF72D283D33F000CCAF76 /* OrdersTableViewController.swift in Sources */,
 				1381683528357CD9008BCD80 /* SceneDelegate.swift in Sources */,
 				135DF724283C282600CCAF76 /* OrderViewController + UI.swift in Sources */,
 				135DF722283BD2E700CCAF76 /* OrderViewController.swift in Sources */,

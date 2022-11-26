@@ -32,8 +32,8 @@ extension OrderViewController {
     func showSuccessAlert() {
         let alertController = AlertBuilder(style: .alert)
             .message("Order successfully saved")
-            .addButton("OK", style: .default) { [weak self] _ in
-                self?.goBackToServicesVC()
+            .addButton("OK", style: .default) {
+                self.goBackToServicesVC()
             }
             .build()
         
