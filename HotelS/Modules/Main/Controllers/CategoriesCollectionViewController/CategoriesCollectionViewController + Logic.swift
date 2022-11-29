@@ -30,9 +30,11 @@ extension CategoriesCollectionViewController {
     
     private func openLoginVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: StoryboardConstants.loginViewControllerIdentifier)
+        let loginVC = storyboard.instantiateViewController(
+            identifier: StoryboardConstants.loginViewControllerIdentifier)
         
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC)
+        (UIApplication.shared.connectedScenes.first?.delegate
+         as? SceneDelegate)?.changeRootViewController(loginVC)
     }
     
 }

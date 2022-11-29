@@ -19,7 +19,8 @@ extension ServicesCollectionViewController {
     func edit(service: Service) {
         let vcId = StoryboardConstants.serviceCreationViewControllerIdentifier
         
-        if let vc = storyboard?.instantiateViewController(withIdentifier: vcId) as? ServiceCreationViewController {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: vcId)
+            as? ServiceCreationViewController {
             vc.serviceCategory = service.category
             vc.serviceToEdit = service
             navigationController?.pushViewController(vc, animated: true)

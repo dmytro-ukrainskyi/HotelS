@@ -91,9 +91,11 @@ extension LoginViewController {
     
     private func openCategoriesVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let navigationController = storyboard.instantiateViewController(identifier: StoryboardConstants.navigationControllerIdentifier)
+        let navigationController = storyboard.instantiateViewController(
+            identifier: StoryboardConstants.navigationControllerIdentifier)
         
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(navigationController)
+        (UIApplication.shared.connectedScenes.first?.delegate
+         as? SceneDelegate)?.changeRootViewController(navigationController)
     }
     
 }
