@@ -92,7 +92,7 @@ final class RoomsManager {
     }
     
     func getRoomBill(completionHandler: @escaping (Double)->()) {
-        let roomNumber = Device.roomNumber!
+        guard let roomNumber = Device.roomNumber else { return }
         
         let roomDocumentID = String(roomNumber)
         

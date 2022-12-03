@@ -12,7 +12,7 @@ extension OrdersTableViewController {
     //MARK: - Public methods
     func loadRoomBill() {
         roomsManager.getRoomBill() { [weak self] bill in
-            self?.title = "Room: \(Device.roomNumber!)   Total bill: $\(bill)"
+            self?.title = "Room: \(Device.roomNumber!)   Total bill: $\(bill.currencyString)"
         }
     }
     
