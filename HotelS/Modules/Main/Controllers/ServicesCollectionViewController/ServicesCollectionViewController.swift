@@ -16,18 +16,15 @@ final class ServicesCollectionViewController: UICollectionViewController {
     var serviceCategory: Service.Category?
     var servicesManager = ServicesManager()
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
         loadServices()
     }
     
     //MARK: - IBActions
-    @IBAction func unwindToServices(_ sender: UIStoryboardSegue) {
-        
-    }
+    @IBAction func unwindToServices(_ sender: UIStoryboardSegue) {}
     
 }

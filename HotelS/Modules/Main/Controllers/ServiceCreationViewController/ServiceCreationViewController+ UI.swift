@@ -16,7 +16,7 @@ extension ServiceCreationViewController {
         
         if serviceToEdit != nil {
             setupServiceEditing()
-            //loadServiceImage()
+            loadServiceImage()
         }
     }
     
@@ -31,10 +31,10 @@ extension ServiceCreationViewController {
     func showSuccessAlert() {
         let alertController = AlertBuilder(style: .alert)
             .message("Service successfully saved")
-            .addButton("OK", style: .default) {_ in
+            .addButton("OK", style: .default) {
                 self.goBackToServicesVC()
             }
-            .alertController
+            .build()
         
         present(alertController, animated: true)
     }
@@ -44,7 +44,8 @@ extension ServiceCreationViewController {
             .title("Error")
             .message("Service image is missing")
             .addButton("OK", style: .default, completionHandler: nil)
-            .alertController
+            .build()
+        
         present(alertController, animated: true)
     }
     
@@ -53,7 +54,8 @@ extension ServiceCreationViewController {
             .title("Error")
             .message("Image size is more than 1MB")
             .addButton("OK", style: .default, completionHandler: nil)
-            .alertController
+            .build()
+        
         present(alertController, animated: true)
     }
     

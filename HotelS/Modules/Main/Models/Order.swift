@@ -9,14 +9,15 @@ import Foundation
 
 struct Order {
     
+    //MARK: - Order Properties
     var name: String
-    var id: Int?
     var room: Int
     var dateOrdered: Date
     var datePicked: Date
     var comment: String
     var cost: Double
     var status: Status
+    var documentID: String?
     
     //MARK: - Order status
     enum Status: String {

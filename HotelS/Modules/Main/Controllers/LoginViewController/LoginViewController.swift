@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 final class LoginViewController: UIViewController {
     
@@ -20,9 +19,9 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var adminSwitch: UISwitch!
     
     //MARK: - Public properties
-    let db = Firestore.firestore()
+    let loginManager = LoginManager()
     
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
                     

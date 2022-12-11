@@ -34,7 +34,7 @@ final class ServiceCreationViewController: UIViewController {
     var serviceCategory: Service.Category?
     var serviceToEdit: Service?
         
-    //MARK: - Lifecycle
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +56,9 @@ final class ServiceCreationViewController: UIViewController {
     
 }
 
-extension ServiceCreationViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+//MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
+extension ServiceCreationViewController: UINavigationControllerDelegate,
+                                         UIImagePickerControllerDelegate {
     
     func createImagePickerController() {
         let imagePickerController = UIImagePickerController()
@@ -66,7 +68,9 @@ extension ServiceCreationViewController: UINavigationControllerDelegate, UIImage
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let tempImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         serviceImageView.image  = tempImage
         self.dismiss(animated: true, completion: nil)

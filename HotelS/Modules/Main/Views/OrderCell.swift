@@ -10,12 +10,9 @@ import UIKit
 class OrderCell: UITableViewCell {
     
     //MARK: - IBOutlets
-    
     @IBOutlet weak var orderCellView: UIView?
     
     @IBOutlet weak var orderNameLabel: UILabel?
-    
-    @IBOutlet weak var orderIdLabel: UILabel?
     
     @IBOutlet weak var roomIdLabel: UILabel?
     

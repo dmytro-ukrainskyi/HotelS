@@ -11,9 +11,8 @@ import Firebase
 struct Device {
     
     //MARK: - Public properties
-    
-    static var roomId: Int {
-        getDeviceRoomId()
+    static var roomNumber: Int? {
+        getDeviceRoomNumber()
     }
     
     static var isAdmin: Bool {
@@ -23,20 +22,42 @@ struct Device {
     static var hotelName: String {
         getHotelName()
     }
+    
+    //MARK: - Private properties
+    private static let defaults = UserDefaults.standard
+    
+    //MARK: - Public methods
+    static func setAdminStatus() {
+        defaults.set(true, forKey: UserDefaultsConstants.isAdmin)
+        defaults.removeObject(forKey: UserDefaultsConstants.roomNumber)
+    }
+    
+    static func setRoomNumber(_ roomNumber: Int) {
+        defaults.set(false, forKey: UserDefaultsConstants.isAdmin)
+        defaults.set(roomNumber, forKey: UserDefaultsConstants.roomNumber)
+    }
+    
+    static func setHotelName(_ name: String) {
+        defaults.set(name, forKey: UserDefaultsConstants.hotelName)
+    }
+
         
     //MARK: - Private methods
-    private static func getDeviceRoomId() -> Int {
-        let deviceRoom = UserDefaults.standard.integer(forKey: UserDefaultsConstants.roomNumber)
+    private static func getDeviceRoomNumber() -> Int {
+        let deviceRoom = defaults.integer(forKey: UserDefaultsConstants.roomNumber)
+        
         return deviceRoom
     }
     
     private static func isAdminDevice() -> Bool {
-        let isAdmin = UserDefaults.standard.bool(forKey: UserDefaultsConstants.isAdmin)
+        let isAdmin = defaults.bool(forKey: UserDefaultsConstants.isAdmin)
+        
         return isAdmin
     }
     
     private static func getHotelName() -> String {
-        let hotelName = UserDefaults.standard.string(forKey: UserDefaultsConstants.hotelName)
+        let hotelName = defaults.string(forKey: UserDefaultsConstants.hotelName)
+        
         return hotelName ?? ""
     }
     

@@ -22,10 +22,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         if Firebase.Auth.auth().currentUser == nil {
-            let loginVC = storyboard.instantiateViewController(identifier: StoryboardConstants.loginViewControllerIdentifier)
+            let loginVC = storyboard.instantiateViewController(
+                identifier: StoryboardConstants.loginViewControllerIdentifier)
             window?.rootViewController = loginVC
         } else {
-            let navigationController = storyboard.instantiateViewController(identifier: StoryboardConstants.navigationControllerIdentifier)
+            let navigationController = storyboard.instantiateViewController(
+                identifier: StoryboardConstants.navigationControllerIdentifier)
             window?.rootViewController = navigationController
         }
         

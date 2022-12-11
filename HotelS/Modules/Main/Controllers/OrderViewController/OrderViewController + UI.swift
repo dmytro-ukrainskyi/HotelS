@@ -16,10 +16,11 @@ extension OrderViewController {
         servicePriceLabel.text = "\(service?.price.currencyString ?? "")"
         
         hideKeyboardWhenTappedAround()
+        
         datePicker.minimumDate = Date()
     }
     
-    func manageDatePicker() {
+    func switchDatePickerState() {
         if deliveryTimeSwitch.isOn {
             datePicker.isEnabled = true
         } else {
@@ -31,10 +32,10 @@ extension OrderViewController {
     func showSuccessAlert() {
         let alertController = AlertBuilder(style: .alert)
             .message("Order successfully saved")
-            .addButton("OK", style: .default) {_ in
+            .addButton("OK", style: .default) {
                 self.goBackToServicesVC()
             }
-            .alertController
+            .build()
         
         present(alertController, animated: true)
     }

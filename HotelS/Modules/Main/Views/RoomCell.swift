@@ -21,8 +21,8 @@ class RoomCell: UITableViewCell {
     @IBOutlet weak var roomBillLabel: UILabel!
     
     //MARK: - Public properties
-    var delegate: RoomCellDelegate?
-        
+    weak var delegate: RoomCellDelegate?
+    
     var room: Room?
     
     //MARK: - Lifecycle

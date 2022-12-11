@@ -15,7 +15,8 @@ struct Service {
     var description: String
     var price: Double
     var category: Category
-    var image: String?
+    var imageURL: URL?
+    var documentID: String?
     
     //MARK: - Categories
     static let categories: [String] = Category.allCases.map({$0.rawValue})

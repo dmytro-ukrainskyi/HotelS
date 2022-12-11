@@ -9,12 +9,15 @@ import UIKit
 
 final class AlertBuilder {
     
-    // MARK: - Public properties
+    //MARK: - Public properties
+    var textFields: [UITextField]? {
+        return alertController.textFields
+    }
     
-    let alertController: UIAlertController
+    // MARK: - Private properties
+    private let alertController: UIAlertController
     
-    // MARK: - Init
-    
+    // MARK: - Lifecycle
     init(style: UIAlertController.Style) {
         self.alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
     }
@@ -24,30 +27,38 @@ final class AlertBuilder {
     }
     
     // MARK: - Public methods
+    func build() -> UIAlertController {
+        return alertController
+    }
     
     func title(_ text: String) -> AlertBuilder {
         alertController.title = text
+        
         return AlertBuilder(alertController)
     }
     
     func message(_ text: String) -> AlertBuilder {
         alertController.message = text
+        
         return AlertBuilder(alertController)
     }
     
-    func addButton(_ title: String, style: UIAlertAction.Style, completionHandler: ((UIAlertController) -> Void)?) -> AlertBuilder {
-        let action = UIAlertAction(title: title, style: style) { (alertAction) in
-            completionHandler?(self.alertController)
+    func addButton(_ title: String, style: UIAlertAction.Style, completionHandler: (() -> Void)?) -> AlertBuilder {
+        let action = UIAlertAction(title: title, style: style) { alertAction in
+            completionHandler?()
         }
+        
         alertController.addAction(action)
+        
         return AlertBuilder(alertController)
     }
     
     func addTextField(placeholder: String, keyboardType: UIKeyboardType) -> AlertBuilder {
-        alertController.addTextField { (textField) in
+        alertController.addTextField { textField in
             textField.placeholder = placeholder
             textField.keyboardType = keyboardType
         }
+        
         return AlertBuilder(alertController)
     }
     
