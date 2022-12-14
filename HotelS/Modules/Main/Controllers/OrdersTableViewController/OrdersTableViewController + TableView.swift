@@ -35,8 +35,8 @@ extension OrdersTableViewController {
         
         cell.orderNameLabel?.text = order.name
         cell.roomIdLabel?.text = "\(order.room)"
-        cell.dateOrderedLabel?.text = "Ordered: \(format(date: order.dateOrdered))"
-        cell.datePickedLabel?.text = "Deliver at: \(format(date: order.datePicked))"
+        cell.dateOrderedLabel?.text = "Ordered: \(order.dateOrdered.formattedString)"
+        cell.datePickedLabel?.text = "Deliver at: \(order.datePicked.formattedString)"
         cell.orderStatusLabel?.text = order.status.rawValue
         cell.orderCostLabel?.text = order.cost.currencyString
         cell.orderCommentLabel?.text = order.comment

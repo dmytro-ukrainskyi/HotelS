@@ -9,8 +9,14 @@ import Foundation
 
 enum DateFormatConstants {
     
-    static let dateFormat = "MMM d, HH:mm"
-    static let dateFormatterLocale = "en_US_POSIX"
+    static let localeIdentifier = "MMM d, HH:mm"
+    
+}
+
+enum CurrencyFormatConstants {
+    
+    static let currencyCode = "USD"
+    static let localeIdentifier = "en_US"
     
 }
 

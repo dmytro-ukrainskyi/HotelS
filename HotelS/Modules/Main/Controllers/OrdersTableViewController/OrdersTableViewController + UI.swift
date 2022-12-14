@@ -54,13 +54,6 @@ extension OrdersTableViewController {
         }
     }
     
-    func format(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: DateFormatConstants.dateFormatterLocale)
-        dateFormatter.dateFormat = DateFormatConstants.dateFormat
-        return dateFormatter.string(from: date)
-    }
-    
     func show(_ alertController: UIAlertController,
               at indexPath: IndexPath) {
         if let popoverController = alertController.popoverPresentationController {

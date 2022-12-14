@@ -1,8 +1,8 @@
 //
-//  Extentions.swift
+//  UIViewController.swift
 //  HotelS
 //
-//  Created by dimas on 27.05.2022.
+//  Created by dimas on 14.12.2022.
 //
 
 import UIKit
@@ -20,20 +20,3 @@ extension UIViewController {
     }
     
 }
-
-extension Double {
-    
-    var currencyString: String {
-        get {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.locale = Locale(identifier: "en_US")
-            numberFormatter.numberStyle = NumberFormatter.Style.currency
-            return numberFormatter.string(from: self as NSNumber)!
-        }
-    }
-    
-}
-
-
-
-
