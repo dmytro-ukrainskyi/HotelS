@@ -11,14 +11,15 @@ import Firebase
 final class LoginManager {
     
     //MARK: - Private properties
-    private let db = Firestore.firestore()
+    private let firestore = Firestore.firestore()
+    private let auth = Firebase.Auth.auth()
     private let roomManager = RoomsManager()
     
     //MARK: - Public methods
     func signInWith(email: String,
                     password: String,
                     completionHandler: @escaping (_ success: Bool) -> ()) {
-        Firebase.Auth.auth().signIn(withEmail: email, password: password) { _, error in
+        auth.signIn(withEmail: email, password: password) { _, error in
             if let error = error {
                 print("Error signing in: \(error)")
                 completionHandler(false)
@@ -32,7 +33,7 @@ final class LoginManager {
     }
     
     func loginAsGuest(roomNumber: Int, completionHandler: @escaping () -> ()) {
-        let roomsRef = db
+        let roomsRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -64,7 +65,7 @@ final class LoginManager {
                       email: String,
                       password: String,
                       completionHandler: @escaping (_ success: Bool) -> ()) {
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { _, error in
+        auth.createUser(withEmail: email, password: password) { _, error in
             if let error = error {
                 print("Error registering: \(error)")
                 completionHandler(false)
@@ -79,7 +80,7 @@ final class LoginManager {
     
     func logOut(completionHandler: @escaping () -> ()) {
         do {
-            try FirebaseAuth.Auth.auth().signOut()
+            try auth.signOut()
             
             completionHandler()
         } catch {
@@ -89,7 +90,7 @@ final class LoginManager {
     
     //MARK: - Private methods
     private func saveHotelWith(id: String, name: String) {
-        let hotelsRef = db.collection(FStoreConstants.hotelsCollectionName)
+        let hotelsRef = firestore.collection(FStoreConstants.hotelsCollectionName)
         
         hotelsRef.document(id).setData([
             FStoreConstants.hotelNameField: name
@@ -97,7 +98,7 @@ final class LoginManager {
     }
     
     private func downloadHotelName(completionHandler: @escaping () -> ()) {
-        db
+        firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .getDocument { document, error in

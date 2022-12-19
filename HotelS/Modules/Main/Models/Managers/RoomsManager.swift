@@ -14,7 +14,7 @@ final class RoomsManager {
     private(set) var rooms = [Room]()
     
     //MARK: - Private properties
-    private let db = Firestore.firestore()
+    private let firestore = Firestore.firestore()
     
     //MARK: - Public methods
     func saveRoom(roomNumber: Int) {
@@ -22,7 +22,7 @@ final class RoomsManager {
         
         let documentID = String(roomNumber)
         
-        let roomRef = db
+        let roomRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -36,7 +36,7 @@ final class RoomsManager {
     }
     
     func loadRooms(completionHandler: @escaping () -> ()) {
-        let roomsRef = db
+        let roomsRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -73,7 +73,7 @@ final class RoomsManager {
     func delete(room: Room, completionHandler: @escaping () -> ()) {
         let roomDocumentID = String(room.number)
         
-        let roomRef = db
+        let roomRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -96,7 +96,7 @@ final class RoomsManager {
         
         let roomDocumentID = String(roomNumber)
         
-        let roomRef = db
+        let roomRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -119,7 +119,7 @@ final class RoomsManager {
     func updateRoomsTotalBillWith(orderPrice: Double) {
         let roomDocumentId = String(Device.roomNumber!)
         
-        let roomRef = db
+        let roomRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -143,7 +143,7 @@ final class RoomsManager {
     func refundFor(order: Order, completionHandler: @escaping ()->()) {
         let roomDocumentId = String(order.room)
         
-        let roomRef = db
+        let roomRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -183,7 +183,7 @@ final class RoomsManager {
         
         let roomDocumentID = String(room.number)
         
-        let roomRef = db
+        let roomRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.roomsCollectionName)
@@ -197,7 +197,7 @@ final class RoomsManager {
                                 Order.Status.inProgress.rawValue,
                                 Order.Status.cancelled.rawValue]
         
-        let ordersRef = db
+        let ordersRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
@@ -219,7 +219,7 @@ final class RoomsManager {
     }
     
     private func updateCompletedOrdersAsPaidFor(room: Room) {
-        let ordersRef = db
+        let ordersRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)

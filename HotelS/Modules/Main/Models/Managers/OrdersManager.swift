@@ -14,13 +14,13 @@ final class OrdersManager {
     private(set) var orders = [Order]()
     
     //MARK: - Private properties
-    private let db = Firestore.firestore()
+    private let firestore = Firestore.firestore()
     
     private var listener: ListenerRegistration?
     
     //MARK: - Public methods
     func save(order: Order, completionHandler: @escaping ()->()) {
-        let orderRef = db
+        let orderRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
@@ -61,7 +61,7 @@ final class OrdersManager {
     func updateStatusFor(order: Order,
                          to status: Order.Status,
                          completionHandler: @escaping ()->()) {
-        let orderRef = db
+        let orderRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)
@@ -130,7 +130,7 @@ final class OrdersManager {
         if Device.isAdmin {
             let statusesToShow = [Order.Status.new.rawValue, Order.Status.inProgress.rawValue]
             
-            ordersRef = db
+            ordersRef = firestore
                 .collection(FStoreConstants.hotelsCollectionName)
                 .document(Hotel.id)
                 .collection(FStoreConstants.ordersCollectionName)
@@ -139,7 +139,7 @@ final class OrdersManager {
         } else {
             let roomNumber = Device.roomNumber!
             
-            ordersRef = db
+            ordersRef = firestore
                 .collection(FStoreConstants.hotelsCollectionName)
                 .document(Hotel.id)
                 .collection(FStoreConstants.ordersCollectionName)
@@ -154,7 +154,7 @@ final class OrdersManager {
     private func createQueryForOrdersWith(status: Order.Status) -> Query {
         let ordersRef: Query
 
-        ordersRef = db
+        ordersRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.ordersCollectionName)

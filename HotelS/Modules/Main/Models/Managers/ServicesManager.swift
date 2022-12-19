@@ -15,12 +15,12 @@ final class ServicesManager {
     private(set) var services = [Service]()
     
     //MARK: - Private properties
-    private let db = Firestore.firestore()
+    private let firestore = Firestore.firestore()
     private let storage = Storage.storage()
     
     //MARK: - Public methods
     func save(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
-        let serviceRef = db
+        let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
@@ -50,7 +50,7 @@ final class ServicesManager {
     }
     
     func loadServicesFor(category: Service.Category, completionHandler: @escaping ()->()) {
-        let servicesRef = db
+        let servicesRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
@@ -78,7 +78,7 @@ final class ServicesManager {
     }
     
     func update(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
-        let serviceRef = db
+        let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
@@ -96,7 +96,7 @@ final class ServicesManager {
     }
     
     func delete(service: Service, completionHandler: @escaping ()->()) {
-        let serviceRef = db
+        let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
@@ -155,7 +155,7 @@ final class ServicesManager {
     }
     
     private func updateServiceImageURL(forService service: Service, with url: URL) {
-        let serviceRef = db
+        let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
             .collection(FStoreConstants.servicesCollectionName)
