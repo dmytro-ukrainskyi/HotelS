@@ -31,7 +31,7 @@ final class LoginManager {
             }
         }
     }
-    
+    // TODO: - Add error handling to callback
     func loginAsGuest(roomNumber: Int, completionHandler: @escaping () -> ()) {
         let roomsRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
@@ -48,11 +48,11 @@ final class LoginManager {
             if let querySnapshot = querySnapshot, querySnapshot.isEmpty {
                 self?.roomManager.saveRoom(roomNumber: roomNumber)
             }
+            
+            Device.setRoomNumber(roomNumber)
+            
+            completionHandler()
         }
-        
-        Device.setRoomNumber(roomNumber)
-        
-        completionHandler()
     }
     
     func loginAsAdmin(completionHandler: @escaping () -> ()) {
