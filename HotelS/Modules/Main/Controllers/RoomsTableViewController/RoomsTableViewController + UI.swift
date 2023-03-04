@@ -18,7 +18,7 @@ extension RoomsTableViewController {
             .addButton("Check Out", style: .destructive) { [weak self] in
                 self?.checkOut(room: room)
             }
-            .addButton("Cancel", style: .cancel, completionHandler: nil)
+            .addButton("Cancel", style: .cancel)
             .build()
         
         present(alertController, animated: true)
@@ -31,7 +31,7 @@ extension RoomsTableViewController {
             .addButton("Delete", style: .destructive) { [weak self] in
                 self?.delete(room: room)
             }
-            .addButton("Cancel", style: .cancel, completionHandler: nil)
+            .addButton("Cancel", style: .cancel)
             .build()
         
         present(alertController, animated: true)
@@ -40,7 +40,7 @@ extension RoomsTableViewController {
     func showSuccessfulCheckoutAlertFor(room: Room) {
         let alertController = AlertBuilder(style: .alert)
             .message("Room \(room.number) has been checked out.")
-            .addButton("OK", style: .cancel, completionHandler: nil)
+            .addButton("OK", style: .cancel)
             .build()
         
         present(alertController, animated: true)
@@ -49,7 +49,7 @@ extension RoomsTableViewController {
     func showSuccessfulDeleteAlertFor(room: Room) {
         let alertController = AlertBuilder(style: .alert)
             .message("Room \(room.number) has been deleted.")
-            .addButton("OK", style: .cancel, completionHandler: nil)
+            .addButton("OK", style: .cancel)
             .build()
         
         present(alertController, animated: true)

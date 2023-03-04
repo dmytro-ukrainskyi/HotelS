@@ -43,7 +43,7 @@ extension ServiceCreationViewController {
         let alertController = AlertBuilder(style: .alert)
             .title("Error")
             .message("Service image is missing")
-            .addButton("OK", style: .default, completionHandler: nil)
+            .addButton("OK", style: .default)
             .build()
         
         present(alertController, animated: true)
@@ -53,7 +53,7 @@ extension ServiceCreationViewController {
         let alertController = AlertBuilder(style: .alert)
             .title("Error")
             .message("Image size is more than 1MB")
-            .addButton("OK", style: .default, completionHandler: nil)
+            .addButton("OK", style: .default)
             .build()
         
         present(alertController, animated: true)

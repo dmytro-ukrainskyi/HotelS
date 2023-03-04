@@ -62,7 +62,7 @@ extension LoginViewController {
         var alertBuilder = AlertBuilder(style: .alert)
             .message("Enter room number")
             .addTextField(placeholder: "Room number", keyboardType: .numberPad)
-            .addButton("Cancel", style: .cancel, completionHandler: nil)
+            .addButton("Cancel", style: .cancel)
         
         let roomNumberTextField: UITextField? = alertBuilder.textFields![0]
         

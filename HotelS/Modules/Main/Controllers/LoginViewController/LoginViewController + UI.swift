@@ -20,7 +20,7 @@ extension LoginViewController {
             .addTextField(placeholder: "Hotel name", keyboardType: .default)
             .addTextField(placeholder: "Email", keyboardType: .emailAddress)
             .addTextField(placeholder: "Password", keyboardType: .default)
-            .addButton("Cancel", style: .cancel, completionHandler: nil)
+            .addButton("Cancel", style: .cancel)
         
         alertBuilder.textFields![2].isSecureTextEntry = true
         
@@ -46,7 +46,7 @@ extension LoginViewController {
         let alertController = AlertBuilder(style: .alert)
             .title("Hotel's Account Created")
             .message("You can proceed to login")
-            .addButton("OK", style: .cancel, completionHandler: nil)
+            .addButton("OK", style: .cancel)
             .build()
         
         present(alertController, animated: true)
@@ -57,7 +57,7 @@ extension LoginViewController {
         let alertController = AlertBuilder(style: .alert)
             .title("Error Signing In")
             .message("Invalid email or password")
-            .addButton("OK", style: .cancel, completionHandler: nil)
+            .addButton("OK", style: .cancel)
             .build()
         
         present(alertController, animated: true)
@@ -66,7 +66,7 @@ extension LoginViewController {
     func showFailedRegistrationAlert() {
         let alertController = AlertBuilder(style: .alert)
             .title("Error Signing Up")
-            .addButton("OK", style: .cancel, completionHandler: nil)
+            .addButton("OK", style: .cancel)
             .build()
         
         present(alertController, animated: true)
@@ -75,7 +75,7 @@ extension LoginViewController {
     func showInvalidRoomNumberAlert() {
         let alertController = AlertBuilder(style: .alert)
             .title("Room Number Is Invalid")
-            .addButton("OK", style: .cancel, completionHandler: nil)
+            .addButton("OK", style: .cancel)
             .build()
         
         present(alertController, animated: true)
