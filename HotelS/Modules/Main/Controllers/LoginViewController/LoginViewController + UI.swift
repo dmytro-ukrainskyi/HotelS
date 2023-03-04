@@ -16,7 +16,7 @@ extension LoginViewController {
     //MARK: - Alerts
     func showRegistrationAlert() {
         var alertBuilder = AlertBuilder(style: .alert)
-            .title("Create hotel account")
+            .title("Create Hotel Account")
             .addTextField(placeholder: "Hotel name", keyboardType: .default)
             .addTextField(placeholder: "Email", keyboardType: .emailAddress)
             .addTextField(placeholder: "Password", keyboardType: .default)
@@ -44,7 +44,7 @@ extension LoginViewController {
     
     func showSuccessfulRegistrationAlert() {
         let alertController = AlertBuilder(style: .alert)
-            .title("Hotel's account created")
+            .title("Hotel's Account Created")
             .message("You can proceed to login")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .build()
@@ -55,7 +55,7 @@ extension LoginViewController {
     //TODO: - Show more detailed info about errors
     func showFailedAuthAlert() {
         let alertController = AlertBuilder(style: .alert)
-            .title("Error signing in")
+            .title("Error Signing In")
             .message("Invalid email or password")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .build()
@@ -65,7 +65,7 @@ extension LoginViewController {
     
     func showFailedRegistrationAlert() {
         let alertController = AlertBuilder(style: .alert)
-            .title("Error signing up")
+            .title("Error Signing Up")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .build()
         
@@ -74,7 +74,7 @@ extension LoginViewController {
     
     func showInvalidRoomNumberAlert() {
         let alertController = AlertBuilder(style: .alert)
-            .title("Room number is invalid")
+            .title("Room Number Is Invalid")
             .addButton("OK", style: .cancel, completionHandler: nil)
             .build()
         

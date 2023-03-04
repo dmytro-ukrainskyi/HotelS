@@ -41,7 +41,7 @@ extension RoomsTableViewController {
                             commit editingStyle: UITableViewCell.EditingStyle,
                             forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            delete(room: roomsManager.rooms[indexPath.row])
+            showDeleteConfirmationAlertFor(room: roomsManager.rooms[indexPath.row])
         }
     }
     

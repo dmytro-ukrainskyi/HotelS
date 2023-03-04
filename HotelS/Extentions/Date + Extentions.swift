@@ -11,7 +11,7 @@ extension Date {
     
     var formattedString: String {
         let locale = Locale(identifier: DateFormatConstants.localeIdentifier)
-        
+        // TODO: - Fix formatted date
         return self.formatted(
             .dateTime
                 .locale(locale)

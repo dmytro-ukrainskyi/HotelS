@@ -43,7 +43,10 @@ final class AlertBuilder {
         return AlertBuilder(alertController)
     }
     
-    func addButton(_ title: String, style: UIAlertAction.Style, completionHandler: (() -> Void)?) -> AlertBuilder {
+    // TODO: - Remove unnecessary nil arguments in calls to addButton func
+    func addButton(_ title: String,
+                   style: UIAlertAction.Style,
+                   completionHandler: (() -> Void)? = nil) -> AlertBuilder {
         let action = UIAlertAction(title: title, style: style) { alertAction in
             completionHandler?()
         }

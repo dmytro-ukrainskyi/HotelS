@@ -70,7 +70,7 @@ extension OrdersTableViewController {
     
     func createAdminActionSheet(for order: Order) -> UIAlertController {
         var alertBuilder = AlertBuilder(style: .actionSheet)
-            .message("Change order status")
+            .message("Change Order Status")
         
         switch order.status {
         case .new:
@@ -104,8 +104,8 @@ extension OrdersTableViewController {
     
     func createRoomActionSheet(for order: Order) -> UIAlertController {
         let alertController = AlertBuilder(style: .actionSheet)
-            .message("Cancel order?")
-            .addButton("Cancel", style: .destructive) {
+            .message("Cancel Order")
+            .addButton("Cancel Order", style: .destructive) {
                 self.updateStatusFor(order: order, to: .cancelled)
                 
                 self.roomsManager.refundFor(order: order) {

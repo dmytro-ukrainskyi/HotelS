@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RoomCellDelegate: AnyObject {
-    func checkOut(room: Room)
+    func showCheckOutConfirmationAlertFor(room: Room)
 }
 
 class RoomCell: UITableViewCell {
@@ -34,9 +34,10 @@ class RoomCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
     }
+    
     //MARK: - IBActions
     @IBAction func checkOutButtonTapped(_ sender: UIButton) {
-        delegate?.checkOut(room: room!)
+        delegate?.showCheckOutConfirmationAlertFor(room: room!)
     }
     
 }

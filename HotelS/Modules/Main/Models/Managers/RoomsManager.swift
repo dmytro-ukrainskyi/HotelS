@@ -64,7 +64,7 @@ final class RoomsManager {
     
     func checkOut(room: Room, completionHandler: @escaping () -> ()) {
         resetBillFor(room: room)
-        deleteCancelledOrdersFor(room: room)
+        deleteIncompleteOrdersFor(room: room)
         updateCompletedOrdersAsPaidFor(room: room)
         
         completionHandler()
@@ -85,7 +85,7 @@ final class RoomsManager {
                 return
             }
             
-            self.deleteCancelledOrdersFor(room: room)
+            self.deleteIncompleteOrdersFor(room: room)
             
             completionHandler()
         }
@@ -192,7 +192,7 @@ final class RoomsManager {
         roomRef.updateData([FStoreConstants.roomBillField: newRoomBill])
     }
     
-    private func deleteCancelledOrdersFor(room: Room) {
+    private func deleteIncompleteOrdersFor(room: Room) {
         let statusesToDelete = [Order.Status.new.rawValue,
                                 Order.Status.inProgress.rawValue,
                                 Order.Status.cancelled.rawValue]
