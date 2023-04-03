@@ -18,7 +18,6 @@ extension OrdersTableViewController {
         setupFilterPopUpButton()
     }
     
-    
     func setupFilterPopUpButton() {
         guard Device.isAdmin else {
             navigationItem.rightBarButtonItem = nil
