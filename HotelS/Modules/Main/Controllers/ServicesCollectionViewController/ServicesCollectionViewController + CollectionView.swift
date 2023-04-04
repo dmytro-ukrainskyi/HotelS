@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-extension ServicesCollectionViewController {
+extension ServicesCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     //MARK: - Collection View Data Source
     override func collectionView(_ collectionView: UICollectionView,
@@ -19,7 +19,10 @@ extension ServicesCollectionViewController {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 250)
+        let cellWidth = self.view.frame.width / 3 - 30
+        let cellHeight = cellWidth * 1.2
+        
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     override func collectionView(_ collectionView: UICollectionView,

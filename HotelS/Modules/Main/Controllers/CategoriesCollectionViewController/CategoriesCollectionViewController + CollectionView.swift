@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension CategoriesCollectionViewController {
+extension CategoriesCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     //MARK: - Collection View Data Source
     override func collectionView(_ collectionView: UICollectionView,
@@ -31,7 +31,9 @@ extension CategoriesCollectionViewController {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 250)
+        let cellSide = self.view.frame.width / 3 - 30
+        
+        return CGSize(width: cellSide, height: cellSide)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
