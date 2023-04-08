@@ -483,6 +483,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7q-gq-MXs">
                                 <rect key="frame" x="272" y="1015" width="200" height="31"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="XJz-0O-Ji4"/>
                                     <constraint firstAttribute="width" constant="200" id="kWa-pZ-G8Q"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
