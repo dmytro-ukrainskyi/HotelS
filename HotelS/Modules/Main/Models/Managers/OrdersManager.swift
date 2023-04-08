@@ -48,7 +48,8 @@ final class OrdersManager {
     }
     
     func loadDefaultOrders(completionHandler: @escaping ()->()) {
-        loadOrdersFrom(query: createDefaultOrdersQuery(), completionHandler: completionHandler)
+        loadOrdersFrom(query: createDefaultOrdersQuery(),
+                       completionHandler: completionHandler)
     }
     
     func loadOrdersWith(status: Order.Status,
@@ -119,7 +120,14 @@ final class OrdersManager {
         let status = Order.Status(rawValue: statusString)
         let documentID = data[FStoreConstants.orderDocumentIDField] as! String
         
-        let order = Order(name: name, room: room, dateOrdered: dateOrdered, datePicked: datePicked, comment: comment, cost: cost, status: status!, documentID: documentID)
+        let order = Order(name: name,
+                          room: room,
+                          dateOrdered: dateOrdered,
+                          datePicked: datePicked,
+                          comment: comment,
+                          cost: cost,
+                          status: status!,
+                          documentID: documentID)
         
         return order
     }
@@ -128,14 +136,14 @@ final class OrdersManager {
         var ordersRef: Query
         
         if Device.isAdmin {
-            let statusesToShow = [Order.Status.new.rawValue, Order.Status.inProgress.rawValue]
+            let statusesToShow = [Order.Status.new.rawValue,
+                                  Order.Status.inProgress.rawValue]
             
             ordersRef = firestore
                 .collection(FStoreConstants.hotelsCollectionName)
                 .document(Hotel.id)
                 .collection(FStoreConstants.ordersCollectionName)
                 .whereField(FStoreConstants.orderStatusField, in: statusesToShow)
-            
         } else {
             let roomNumber = Device.roomNumber!
             

@@ -19,7 +19,9 @@ final class ServicesManager {
     private let storage = Storage.storage()
     
     //MARK: - Public methods
-    func save(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
+    func save(service: Service,
+              withImage image: Data,
+              completionHandler: @escaping ()->()) {
         let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
@@ -49,7 +51,8 @@ final class ServicesManager {
         }
     }
     
-    func loadServicesFor(category: Service.Category, completionHandler: @escaping ()->()) {
+    func loadServicesFor(category: Service.Category,
+                         completionHandler: @escaping ()->()) {
         let servicesRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
@@ -77,7 +80,9 @@ final class ServicesManager {
         }
     }
     
-    func update(service: Service, withImage image: Data, completionHandler: @escaping ()->()) {
+    func update(service: Service,
+                withImage image: Data,
+                completionHandler: @escaping ()->()) {
         let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)
@@ -154,7 +159,8 @@ final class ServicesManager {
         }
     }
     
-    private func updateServiceImageURL(forService service: Service, with url: URL) {
+    private func updateServiceImageURL(forService service: Service,
+                                       with url: URL) {
         let serviceRef = firestore
             .collection(FStoreConstants.hotelsCollectionName)
             .document(Hotel.id)

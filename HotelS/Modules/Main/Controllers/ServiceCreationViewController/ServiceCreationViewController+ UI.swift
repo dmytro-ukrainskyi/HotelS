@@ -12,7 +12,7 @@ extension ServiceCreationViewController {
     //MARK: - Public methods
     func setupUI() {
           hideKeyboardWhenTappedAround()
-          categoryNameLabel.text = "Create service for category \"\(serviceCategory!)\""
+        categoryNameLabel.text = "Create service for category \"\(serviceCategory!.rawValue)\""
         
         if serviceToEdit != nil {
             setupServiceEditing()
