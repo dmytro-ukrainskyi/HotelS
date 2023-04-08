@@ -1,6 +1,8 @@
-# HotelS
-
-HotelS is an iOS application for ordering services in hotels.
+<div align="center">
+    <img src=".github/appIcon/appIcon.png">
+</div>
+<h1 align="center">HotelS</h1>
+<p align="center">An iOS application for ordering services in hotels.</p>
 
 ## Features
 
@@ -12,11 +14,11 @@ App is written in Swift using MVC architecture. UI is built using UIKit with Sto
 ## Screenshots
 
 <span>
-    <img src=".github/screenshots/loginScreen.jpg" alt="screenshots/loginScreen" width="300px">
+    <img src=".github/screenshots/loginScreen.jpg" alt="screenshots/loginScreen" width="250px">
 </span>
 <span>
-    <img src=".github/screenshots/categoriesScreen.jpg" alt="screenshots/categoriesScreen" width="300px">
+    <img src=".github/screenshots/categoriesScreen.jpg" alt="screenshots/categoriesScreen" width="250px">
 </span>
 <span>
-    <img src=".github/screenshots/guestOrdersScreen.jpg" alt="screenshots/guestOrdersScreen" width="300px">
+    <img src=".github/screenshots/guestOrdersScreen.jpg" alt="screenshots/guestOrdersScreen" width="250px">
 </span>
