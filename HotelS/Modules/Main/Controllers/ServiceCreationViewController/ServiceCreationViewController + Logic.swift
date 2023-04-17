@@ -59,8 +59,9 @@ extension ServiceCreationViewController {
         let price = Double(priceString) ?? 0
         let category = serviceCategory
         let documentID = serviceToEdit?.documentID
+        let imageURL = serviceToEdit?.imageURL
         
-        let service = Service(name: name, description: description, price: price, category: category!, documentID: documentID)
+        let service = Service(name: name, description: description, price: price, category: category!, imageURL: imageURL, documentID: documentID)
         
         return service
     }

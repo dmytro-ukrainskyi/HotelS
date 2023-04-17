@@ -17,13 +17,15 @@ extension ServicesCollectionViewController {
     }
     
     func edit(service: Service) {
-        let vcId = StoryboardConstants.serviceCreationViewControllerIdentifier
+        let viewControllerID = StoryboardConstants
+            .serviceCreationViewControllerIdentifier
         
-        if let vc = storyboard?.instantiateViewController(withIdentifier: vcId)
+        if let viewController = storyboard?
+            .instantiateViewController(withIdentifier: viewControllerID)
             as? ServiceCreationViewController {
-            vc.serviceCategory = service.category
-            vc.serviceToEdit = service
-            navigationController?.pushViewController(vc, animated: true)
+            viewController.serviceCategory = service.category
+            viewController.serviceToEdit = service
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
     

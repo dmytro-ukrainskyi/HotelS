@@ -11,12 +11,13 @@ extension ServiceCreationViewController {
     
     //MARK: - Public methods
     func setupUI() {
-          hideKeyboardWhenTappedAround()
-        categoryNameLabel.text = "Create service for category \"\(serviceCategory!.rawValue)\""
+        hideKeyboardWhenTappedAround()
         
         if serviceToEdit != nil {
             setupServiceEditing()
             loadServiceImage()
+        } else {
+            categoryNameLabel.text = "Create service for category \"\(serviceCategory!.rawValue)\""
         }
     }
     
@@ -25,7 +26,7 @@ extension ServiceCreationViewController {
         serviceNameTextField.text = serviceToEdit?.name
         serviceDescriptionTextView.text = serviceToEdit?.description
         servicePriceTextField.text = String(describing:serviceToEdit!.price)
-        createButton.titleLabel?.text = "Save"
+        createButton.setTitle("Save", for: .normal)
     }
     
     func showSuccessAlert() {

@@ -89,6 +89,8 @@ final class ServicesManager {
             .collection(FStoreConstants.servicesCollectionName)
             .document(service.documentID!)
         
+        deleteImage(forService: service)
+
         serviceRef.updateData([
             FStoreConstants.serviceNameField: service.name,
             FStoreConstants.serviceDescriptionField: service.description,
@@ -173,12 +175,7 @@ final class ServicesManager {
     }
     
     private func deleteImage(forService service: Service) {
-        let imageRef = storage
-            .reference()
-            .child("Service images")
-            .child(Hotel.id)
-            .child(service.category.rawValue)
-            .child(service.name)
+        let imageRef = storage.reference(forURL: service.imageURL!.absoluteString)
         
         imageRef.delete() { error in
             print("Error deleting image: \(String(describing: error))")
