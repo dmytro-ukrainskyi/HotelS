@@ -34,7 +34,7 @@ extension CategoriesCollectionViewController {
             identifier: StoryboardConstants.loginViewControllerIdentifier)
         
         (UIApplication.shared.connectedScenes.first?.delegate
-         as? SceneDelegate)?.changeRootViewController(loginViewController)
+         as? SceneDelegate)?.changeRootViewController(to: loginViewController)
     }
     
 }

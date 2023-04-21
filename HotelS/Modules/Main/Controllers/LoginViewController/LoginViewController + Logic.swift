@@ -95,7 +95,7 @@ extension LoginViewController {
             identifier: StoryboardConstants.navigationControllerIdentifier)
         
         (UIApplication.shared.connectedScenes.first?.delegate
-         as? SceneDelegate)?.changeRootViewController(navigationController)
+         as? SceneDelegate)?.changeRootViewController(to: navigationController)
     }
     
 }
