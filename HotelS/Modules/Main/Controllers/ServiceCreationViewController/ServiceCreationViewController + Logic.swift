@@ -11,15 +11,16 @@ import SDWebImage
 extension ServiceCreationViewController {
     
     //MARK: - Public methods
-    func goBackToServicesVC() {
+    func goBackToServicesViewController() {
         self.performSegue(withIdentifier: StoryboardConstants.unwindToServices, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == StoryboardConstants.unwindToServices {
-            let destinationVC = segue.destination as! ServicesCollectionViewController
-            destinationVC.serviceCategory = serviceCategory
-            destinationVC.loadServices()
+            let destinationViewController = segue.destination as!
+            ServicesCollectionViewController
+            destinationViewController.serviceCategory = serviceCategory
+            destinationViewController.loadServices()
         }
     }
     

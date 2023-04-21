@@ -33,7 +33,7 @@ extension ServiceCreationViewController {
         let alertController = AlertBuilder(style: .alert)
             .message("Service successfully saved")
             .addButton("OK", style: .default) {
-                self.goBackToServicesVC()
+                self.goBackToServicesViewController()
             }
             .build()
         

@@ -33,7 +33,7 @@ extension OrderViewController {
         let alertController = AlertBuilder(style: .alert)
             .message("Order successfully saved")
             .addButton("OK", style: .default) {
-                self.goBackToServicesVC()
+                self.goBackToServicesViewController()
             }
             .build()
         

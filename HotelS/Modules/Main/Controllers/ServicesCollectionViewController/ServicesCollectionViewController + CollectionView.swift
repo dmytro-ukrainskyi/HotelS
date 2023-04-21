@@ -54,15 +54,19 @@ extension ServicesCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == StoryboardConstants.toOrderSegueIdentifier {
-            let destinationVC = segue.destination as! OrderViewController
+            let destinationViewController = segue.destination as! OrderViewController
             
             if let cell = sender as? UICollectionViewCell,
                let indexPath = self.collectionView.indexPath(for: cell) {
-                destinationVC.service = servicesManager.services[indexPath.item]
+                destinationViewController.service = servicesManager
+                    .services[indexPath.item]
             }
-        } else if segue.identifier == StoryboardConstants.toServiceCreationSegueIdentifier {
-            let destinationVC = segue.destination as! ServiceCreationViewController
-            destinationVC.serviceCategory = serviceCategory
+        } else if segue.identifier == StoryboardConstants
+            .toServiceCreationSegueIdentifier {
+            let destinationViewController = segue.destination as!
+            ServiceCreationViewController
+            
+            destinationViewController.serviceCategory = serviceCategory
         }
     }
     

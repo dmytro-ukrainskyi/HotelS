@@ -24,17 +24,17 @@ extension CategoriesCollectionViewController {
     //MARK: - Private methods
     func logOut() {
         loginManager.logOut { [weak self] in
-            self?.openLoginVC()
+            self?.openLoginViewController()
         }
     }
     
-    private func openLoginVC() {
+    private func openLoginViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(
+        let loginViewController = storyboard.instantiateViewController(
             identifier: StoryboardConstants.loginViewControllerIdentifier)
         
         (UIApplication.shared.connectedScenes.first?.delegate
-         as? SceneDelegate)?.changeRootViewController(loginVC)
+         as? SceneDelegate)?.changeRootViewController(loginViewController)
     }
     
 }

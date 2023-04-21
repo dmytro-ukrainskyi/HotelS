@@ -38,12 +38,14 @@ extension CategoriesCollectionViewController: UICollectionViewDelegateFlowLayout
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == StoryboardConstants.toServicesSegueIdentifier {
-            let destinationVC = segue.destination as! ServicesCollectionViewController
+            let destinationViewController = segue.destination
+            as! ServicesCollectionViewController
             
             if let cell = sender as? UICollectionViewCell,
                let indexPath = self.collectionView.indexPath(for: cell) {
                 let categoryString = serviceCategories[indexPath.item]
-                destinationVC.serviceCategory = Service.Category(rawValue: categoryString)
+                destinationViewController.serviceCategory = Service.Category(
+                    rawValue: categoryString)
             }
         }
     }

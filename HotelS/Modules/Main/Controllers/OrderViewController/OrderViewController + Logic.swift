@@ -41,16 +41,16 @@ extension OrderViewController {
     }
     
     //MARK: - Navigation
-    func goBackToServicesVC() {
+    func goBackToServicesViewController() {
         self.performSegue(withIdentifier: StoryboardConstants.unwindToServices, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == StoryboardConstants.unwindToServices {
-            let destinationVC = segue.destination as! ServicesCollectionViewController
-            destinationVC.serviceCategory = service?.category
+            let destinationViewController = segue.destination as!
+            ServicesCollectionViewController
+            destinationViewController.serviceCategory = service?.category
         }
     }
-    
     
 }

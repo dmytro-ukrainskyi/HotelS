@@ -10,21 +10,21 @@ import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
+    //MARK: - Public properties
     var window: UIWindow?
     
-    
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+    //MARK: - Public methods
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         if Firebase.Auth.auth().currentUser == nil {
-            let loginVC = storyboard.instantiateViewController(
+            let loginViewController = storyboard.instantiateViewController(
                 identifier: StoryboardConstants.loginViewControllerIdentifier)
-            window?.rootViewController = loginVC
+            window?.rootViewController = loginViewController
         } else {
             let navigationController = storyboard.instantiateViewController(
                 identifier: StoryboardConstants.navigationControllerIdentifier)
@@ -33,12 +33,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
     }
     
-    func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
+    func changeRootViewController(to viewController: UIViewController,
+                                  animated: Bool = true) {
         guard let window = self.window else {
             return
         }
         
-        window.rootViewController = vc
+        window.rootViewController = viewController
         
         UIView.transition(with: window,
                           duration: 0.4,

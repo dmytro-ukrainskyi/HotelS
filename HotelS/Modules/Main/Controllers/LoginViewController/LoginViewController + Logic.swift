@@ -54,7 +54,7 @@ extension LoginViewController {
     
     private func loginAsAdmin() {
         loginManager.loginAsAdmin { [weak self] in
-            self?.openCategoriesVC()
+            self?.openCategoriesViewController()
         }
     }
     
@@ -85,11 +85,11 @@ extension LoginViewController {
     
     private func loginAsGuest(roomNumber: Int) {
         loginManager.loginAsGuest(roomNumber: roomNumber) { [weak self] in
-            self?.openCategoriesVC()
+            self?.openCategoriesViewController()
         }
     }
     
-    private func openCategoriesVC() {
+    private func openCategoriesViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let navigationController = storyboard.instantiateViewController(
             identifier: StoryboardConstants.navigationControllerIdentifier)
